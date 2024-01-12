@@ -1,0 +1,15 @@
+add pagination to homepage videos
+add tags to videos and filtering on homepage top below headers based on these tags for videos
+
+
+
+add admn panel to upload videos on firebase
+
+
+add auth and channel relation to auth model
+
+make video play on hover card
+
+make video cards carousel on homepage
+
+responsive on mobile and small device

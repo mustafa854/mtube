@@ -1,36 +1,32 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import "./styles/videoCard.css";
 import "./App.css";
-
+import Header from "./components/Header.tsx";
+import Banner from "./components/Banner";
+import "/src/styles/header.css";
+import VideoCard from "./components/videocard.tsx";
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <h1 className="text-3xl font-bold text-yellow-400	 underline">
-        Hello world!
-      </h1>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <Header />
+      <Banner />
+      <div className="container mx-auto px-4 mt-5 mb-4 flex flex-row justify-between	items-center">
+        <h2 className="text-2xl	 font-bold	">Trending</h2>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div className="video-wrapper flex flex-row gap-3 px-4">
+        <VideoCard />
+        <VideoCard />
+        <VideoCard />
+        <VideoCard />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div className="container mx-auto px-4 mt-7 flex mb-4 flex-row justify-between	items-center">
+        <h2 className="text-2xl	 font-bold	">Trending</h2>
+      </div>
+      <div className="video-wrapper flex flex-row mb-10 gap-3 px-4">
+        <VideoCard />
+        <VideoCard />
+        <VideoCard />
+        <VideoCard />
+      </div>
     </>
   );
 }
