@@ -13,3 +13,12 @@ make video play on hover card
 make video cards carousel on homepage
 
 responsive on mobile and small device
+
+implementing views, date, nav bar
+
+video category
+
+channels page
+
+
+make description wyswyg editor and formatting 
