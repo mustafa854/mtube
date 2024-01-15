@@ -32,7 +32,7 @@ function VideoCard2({ video }) {
                   •
                 </p>
                 <p className="upload-date text-xs pl-2 font-normal text-gray-500">
-                  {}
+                  Upload Date
                 </p>
               </div>
             </div>

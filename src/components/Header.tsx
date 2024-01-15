@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Header() {
   return (
     <>
@@ -7,11 +9,13 @@ function Header() {
             <img className="header-icon" src="/src/assets/menu.svg" alt="" />
           </div>
           <div>
-            <img
-              className="header-icon--logo"
-              src="/src/assets/logo.svg"
-              alt=""
-            />
+            <Link to={"/"}>
+              <img
+                className="header-icon--logo"
+                src="/src/assets/logo.svg"
+                alt=""
+              />
+            </Link>
           </div>
         </div>
         <div></div>

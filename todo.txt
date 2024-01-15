@@ -21,4 +21,8 @@ video category
 channels page
 
 
-make description wyswyg editor and formatting 
+make description wyswyg editor and formatting and read more button
+
+
+
+like dislike share comment subscribe

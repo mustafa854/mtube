@@ -9,7 +9,7 @@ function Home({ videos }) {
       <div className="container mx-auto px-4 mt-5 mb-4 flex flex-row justify-between	items-center">
         <h2 className="text-2xl	 font-bold	">Trending</h2>
       </div>
-      <div className="video-wrapper flex flex-row gap-3 px-4 flex-wrap">
+      <div className="video-wrapper grid grid-cols-4 gap-3 px-4">
         {videos.slice(0, 6).map((video) => (
           <VideoCard key={video.id} video={video} />
         ))}
@@ -17,7 +17,7 @@ function Home({ videos }) {
       <div className="container mx-auto px-4 mt-7 flex mb-4 flex-row justify-between	items-center">
         <h2 className="text-2xl	 font-bold	">Trending</h2>
       </div>
-      <div className="video-wrapper flex flex-row mb-10 gap-3 px-4 flex-wrap">
+      <div className="video-wrapper grid grid-cols-4 gap-3 px-4 mb-10">
         {videos.slice(0, 6).map((video) => (
           <VideoCard key={video.id} video={video} />
         ))}

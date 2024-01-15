@@ -55,6 +55,19 @@ function VideoDetails({ videos }) {
                   <h3 className="text-xs font-light">153k Subscribers</h3>
                 </div>
               </div>
+              <div
+                className="mt-4 p-3 rounded-xl"
+                style={{ backgroundColor: "hsla(0,0%,93.3%,0.8)" }}
+              >
+                <p className="text-sm font-medium">
+                  {videoDetail.views} Views&nbsp;&nbsp;&nbsp;Publish
+                  Date&nbsp;&nbsp;&nbsp;
+                  <span className="text-zinc-400">
+                    #HASHTAGS #HASHTAGS #HASHTAGS
+                  </span>
+                </p>
+                <p className="text-sm mt-2">{videoDetail.description}</p>
+              </div>
             </div>
           </div>
           <div className="w-1/4">
