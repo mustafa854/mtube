@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import VideoCard2 from "../components/videoCard2";
+import { Link } from "react-router-dom";
 
 function VideoDetails({ videos }) {
   const { id } = useParams();
@@ -33,28 +34,40 @@ function VideoDetails({ videos }) {
               </h2>
               <div className="flex flex-row mt-2">
                 <div>
-                  <img
-                    src={videoDetail.channelImage}
+                  <Link to={"/channels/" + videoDetail.channel_id}>
+                    <img
+                      src={videoDetail.channel.channelImage}
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "500px",
+                        objectFit: "cover",
+                      }}
+                      alt=""
+                    />
+                  </Link>
+                </div>
+                <Link to={"/channels/" + videoDetail.channel_id}>
+                  <div
+                    className="flex flex-col justify-center items-start ml-2"
                     style={{
-                      width: "40px",
-                      height: "40px",
-                      borderRadius: "500px",
+                      maxHeight: "40px",
                     }}
-                    alt=""
-                  />
-                </div>
-                <div
-                  className="flex flex-col justify-center items-start ml-2"
-                  style={{
-                    maxHeight: "40px",
-                  }}
+                  >
+                    <h3 className="text-base font-medium">
+                      {videoDetail.channel.channelName}
+                    </h3>
+                    <h3 className="text-xs font-light">153k Subscribers</h3>
+                  </div>
+                </Link>
+                <button
+                  type="button"
+                  className="hover:bg-slate-800 bg-black text-white p-2 px-4 ml-5 rounded-full"
                 >
-                  <h3 className="text-base font-medium">
-                    {videoDetail.channelName}
-                  </h3>
-                  <h3 className="text-xs font-light">153k Subscribers</h3>
-                </div>
+                  Subscribe
+                </button>
               </div>
+
               <div
                 className="mt-4 p-3 rounded-xl"
                 style={{ backgroundColor: "hsla(0,0%,93.3%,0.8)" }}

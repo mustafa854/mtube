@@ -1,6 +1,18 @@
 import { Link } from "react-router-dom";
+import {
+  googleSignin,
+  isAuthenticated,
+  userSignOut,
+} from "../services/firebase.js";
 
 function Header() {
+  const signIn = async () => {
+    googleSignin();
+  };
+  const signOut = async () => {
+    userSignOut();
+  };
+  console.log(isAuthenticated());
   return (
     <>
       <div className="container mx-auto p-4 flex flex-row justify-between	items-center">
@@ -20,7 +32,10 @@ function Header() {
         </div>
         <div></div>
         <div className="flex flex-row gap-x-2">
-          <div>
+          <div className="flex flex-row gap-3">
+            <Link to="/channels">
+              <p>Channels</p>
+            </Link>
             <img
               className="header-icon"
               src="/src/assets/popupmenuHeader.svg"
@@ -28,17 +43,37 @@ function Header() {
             />
           </div>
           <div className="">
-            <button
-              type="button"
-              className="flex flex-row hover:bg-sky-100 hover:border-sky-100 justify-center	items-center text-sky-600 p-2 border border-slate-200 rounded-full pt-0 pb-1"
-            >
-              <img
-                src="/src/assets/profile.svg"
-                className="header-icon pt-1 pr-2 fill-current text-sky-600"
-                alt=""
-              />
-              Signin
-            </button>
+            {isAuthenticated() === false ? (
+              <>
+                <button
+                  type="button"
+                  className="flex flex-row hover:bg-sky-100 hover:border-sky-100 justify-center	items-center text-sky-600 p-2 border border-slate-200 rounded-full pt-0 pb-1"
+                  onClick={signIn}
+                >
+                  <img
+                    src="/src/assets/profile.svg"
+                    className="header-icon pt-1 pr-2 fill-current text-sky-600"
+                    alt=""
+                  />
+                  Signin
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="flex flex-row hover:bg-sky-100 hover:border-sky-100 justify-center	items-center text-sky-600 p-2 border border-slate-200 rounded-full pt-0 pb-1"
+                  onClick={signOut}
+                >
+                  <img
+                    src="/src/assets/profile.svg"
+                    className="header-icon pt-1 pr-2 fill-current text-sky-600"
+                    alt=""
+                  />
+                  Logout
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

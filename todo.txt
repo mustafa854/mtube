@@ -26,3 +26,18 @@ make description wyswyg editor and formatting and read more button
 
 
 like dislike share comment subscribe
+
+only authentcated user can upload video
+handle updtes to channel name and description after it has been created
+
+user profile and show his uploaded videos
+
+verify channels
+
+create channel page | upload video page
+
+
+channelDetailrefactor code
+
+
+accordion on channels details page for about info and on video description
