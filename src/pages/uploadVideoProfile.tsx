@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { getCurrentChannel, getChannelVideos } from "../services/firebase";
 import VideoCard from "../components/videocard";
 
-function ChannelsDetail({ channels }) {
+function UploadVideoProfile({ channels }) {
   const { id } = useParams();
   const [channelDetail, setChannelDetail] = useState();
   const [currentChannelVideos, setCurrentChannelVideos] = useState([]);
@@ -68,7 +68,7 @@ function ChannelsDetail({ channels }) {
                 {channelDetail.channelName}
               </h2>
               <p className="text-sm text-neutral-500">
-                @channelid • {channelDetail?.Subscribers} subscribers •
+                @channelDetail?.id • {channelDetail?.Subscribers} subscribers •
                 {channelDetail?.videos
                   ? " " + channelDetail.videos.length + " Videos"
                   : " 0 Video"}
@@ -89,23 +89,31 @@ function ChannelsDetail({ channels }) {
             </div>
           </div>
           <div className="flex flex-row gap-5 mt-5 text-neutral-700 border-b-2">
+            <Link to={"/channels/" + id}>Videos</Link>
             <Link
-              to={"/channels/" + id}
               className="text-black  font-semibold border-b-4 pb-3 border-black"
+              to={"/channels/" + id + "/upload"}
             >
-              Videos
+              Upload Videos
             </Link>
-            <Link to={"/channels/" + id + "/upload"}>Upload Videos</Link>
-            <Link to={"/channels/" + id + "/edit_profile"}>Edit Profile</Link>
-            <Link to={"/channels/" + id + "/profile"}>Profile</Link>
+            <Link to={"/channels/" + id + "/edit_profile"} className="">
+              Edit Profile
+            </Link>
+            <Link to={"/channels/" + id + "/profile"} className="">
+              Profile
+            </Link>
           </div>
 
           <div className="container">
-            <div className="video-wrapper grid grid-cols-3 gap-3 mt-6 mb-5">
+            {/* <div className="video-wrapper grid grid-cols-3 gap-3 mt-6 mb-5">
               {currentChannelVideos.map((video) => (
                 <VideoCard key={video.id} video={video} />
               ))}
-            </div>
+            </div> */}
+            <p className="mt-3">
+              Upload Video Form goes here with validation and authentication
+              checking
+            </p>
           </div>
         </div>
       </>
@@ -113,4 +121,4 @@ function ChannelsDetail({ channels }) {
   }
 }
 
-export default ChannelsDetail;
+export default UploadVideoProfile;

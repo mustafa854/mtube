@@ -23,9 +23,13 @@ channels page
 
 make description wyswyg editor and formatting and read more button
 
+edit uploaded videos
 
+Views like dislike share comment subscribe
 
-like dislike share comment subscribe
+Authentoication and permissions wherever requiredx
+
+Search Bar
 
 only authentcated user can upload video
 handle updtes to channel name and description after it has been created
@@ -39,5 +43,10 @@ create channel page | upload video page
 
 channelDetailrefactor code
 
+loggedin user profile
+
+currentUser Account Page
+
+create channel for loggedinUser
 
 accordion on channels details page for about info and on video description

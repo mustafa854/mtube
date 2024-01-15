@@ -11,6 +11,9 @@ import NotFound from "./pages/notFound";
 import ChannelList from "./pages/channelsList";
 import ChannelsDetail from "./pages/channelsDetail.tsx";
 import ChannelUserProfile from "./pages/channelUserProfile.tsx";
+import UploadVideoProfile from "./pages/uploadVideoProfile";
+import EditProfile from "./pages/editProfile";
+import UserProfile from "./pages/userProfile.tsx";
 function App() {
   const [videos, setVideos] = useState([]);
   const [channels, setChannels] = useState([]);
@@ -54,6 +57,7 @@ function App() {
             path="channels"
             element={<ChannelList channels={channels} />}
           />
+          <Route path="my-account" element={<UserProfile />} />
           <Route
             path="/channels/:id"
             element={<ChannelsDetail channels={channels} />}
@@ -64,11 +68,11 @@ function App() {
           />
           <Route
             path="/channels/:id/upload"
-            element={<ChannelsDetail channels={channels} />}
+            element={<UploadVideoProfile channels={channels} />}
           />
           <Route
             path="/channels/:id/edit_profile"
-            element={<ChannelsDetail channels={channels} />}
+            element={<EditProfile channels={channels} />}
           />
           <Route
             path="/channels/:id/profile"

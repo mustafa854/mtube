@@ -107,3 +107,11 @@ export const userSignOut = () => {
       console.error(error);
     });
 };
+
+export const userAccountDetails = () => {
+  const user = auth.currentUser;
+
+  if (user !== null) {
+    return [user.photoURL, user.email, user.displayName, user.providerData];
+  }
+};
