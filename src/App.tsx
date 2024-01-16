@@ -3,7 +3,13 @@ import "./App.css";
 import Header from "./components/Header.tsx";
 import "/src/styles/header.css";
 import { useEffect, useRef, useState } from "react";
-import { getVideos, getChannels } from "./services/firebase";
+import {
+  getVideos,
+  getChannels,
+  userAccountDetails,
+  isAuthenticated,
+  getChannelLink,
+} from "./services/firebase";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
 import VideoDetails from "./pages/videoDetail";
@@ -17,8 +23,14 @@ import UserProfile from "./pages/userProfile.tsx";
 function App() {
   const [videos, setVideos] = useState([]);
   const [channels, setChannels] = useState([]);
+  const [myChannelLink, setMyChannelLink] = useState("");
   const shouldFetch = useRef(true);
 
+  if (isAuthenticated()) {
+    var userDetails = userAccountDetails();
+  } else {
+    userDetails = false;
+  }
   const fetchData = async () => {
     try {
       const videosFetched = await getVideos();
@@ -42,14 +54,24 @@ function App() {
   useEffect(() => {
     if (shouldFetch.current) {
       shouldFetch.current = false;
+      const fetchChannelLink = async () => {
+        getChannelLink().then((response) => {
+          console.log();
+          setMyChannelLink(response);
+        });
+      };
 
       fetchData();
+      fetchChannelLink();
     }
   }, []);
+  useEffect(() => {
+    console.log("............................................", myChannelLink);
+  }, [myChannelLink]);
   if (videos) {
     return (
       <Router>
-        <Header />
+        <Header userDetails={userDetails} channelExists={myChannelLink} />
         <Routes>
           <Route exact path="/" element={<Home videos={videos} />} />
           <Route path="/:id" element={<VideoDetails videos={videos} />} />
@@ -57,7 +79,10 @@ function App() {
             path="channels"
             element={<ChannelList channels={channels} />}
           />
-          <Route path="my-account" element={<UserProfile />} />
+          <Route
+            path="my-account"
+            element={<UserProfile userDetails={userDetails} />}
+          />
           <Route
             path="/channels/:id"
             element={<ChannelsDetail channels={channels} />}

@@ -40,6 +40,7 @@ verify channels
 
 create channel page | upload video page
 
+Protected Routes (also protect /my-account/)
 
 channelDetailrefactor code
 

@@ -13,6 +13,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 const qVideos = query(collection(db, "videos"));
@@ -101,8 +102,8 @@ export const userSignOut = () => {
   signOut(auth)
     .then(() => {
       console.log("User Signed Out");
+      location.reload();
     })
-    .then(location.reload())
     .catch((error) => {
       console.error(error);
     });
@@ -114,4 +115,31 @@ export const userAccountDetails = () => {
   if (user !== null) {
     return [user.photoURL, user.email, user.displayName, user.providerData];
   }
+};
+
+export const getChannelLink = async () => {
+  const auth = getAuth();
+  await onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      console.log("!!!!!!!!!!!!!!!!!!!");
+      const qChannel = query(
+        collection(db, "userMeta"),
+        where("email", "==", user.email)
+      );
+
+      const querySnapshot = await getDocs(qChannel);
+      if (querySnapshot.size > 0) {
+        let output;
+        querySnapshot.forEach((doc) => {
+          output = doc.data().channelLink;
+        });
+        console.log(output);
+        return output;
+      } else {
+        return "";
+      }
+    } else {
+      return "";
+    }
+  });
 };
