@@ -18,7 +18,7 @@ implementing views, date, nav bar
 
 video category
 
-channels page
+channels page.
 
 
 make description wyswyg editor and formatting and read more button
