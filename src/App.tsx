@@ -3,12 +3,12 @@ import "./App.css";
 import Header from "./components/Header.tsx";
 import "/src/styles/header.css";
 import { useEffect, useRef, useState } from "react";
+import { getChannelLink } from "./utils/getChannelLink.ts";
 import {
   getVideos,
   getChannels,
   userAccountDetails,
   isAuthenticated,
-  getChannelLink,
 } from "./services/firebase";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
@@ -20,6 +20,7 @@ import ChannelUserProfile from "./pages/channelUserProfile.tsx";
 import UploadVideoProfile from "./pages/uploadVideoProfile";
 import EditProfile from "./pages/editProfile";
 import UserProfile from "./pages/userProfile.tsx";
+import { auth } from "./config/firebase-config.ts";
 function App() {
   const [videos, setVideos] = useState([]);
   const [channels, setChannels] = useState([]);
@@ -54,17 +55,22 @@ function App() {
   useEffect(() => {
     if (shouldFetch.current) {
       shouldFetch.current = false;
-      const fetchChannelLink = async () => {
-        getChannelLink().then((response) => {
-          console.log();
-          setMyChannelLink(response);
-        });
-      };
 
       fetchData();
-      fetchChannelLink();
     }
   }, []);
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      const fetchChannelLink = async () => {
+        const response = await getChannelLink();
+        console.log("Response................", response);
+        setMyChannelLink(response);
+      };
+      return () => fetchChannelLink();
+    }
+  }, [auth.currentUser]);
+
   useEffect(() => {
     console.log("............................................", myChannelLink);
   }, [myChannelLink]);

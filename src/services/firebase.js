@@ -116,30 +116,3 @@ export const userAccountDetails = () => {
     return [user.photoURL, user.email, user.displayName, user.providerData];
   }
 };
-
-export const getChannelLink = async () => {
-  const auth = getAuth();
-  await onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      console.log("!!!!!!!!!!!!!!!!!!!");
-      const qChannel = query(
-        collection(db, "userMeta"),
-        where("email", "==", user.email)
-      );
-
-      const querySnapshot = await getDocs(qChannel);
-      if (querySnapshot.size > 0) {
-        let output;
-        querySnapshot.forEach((doc) => {
-          output = doc.data().channelLink;
-        });
-        console.log(output);
-        return output;
-      } else {
-        return "";
-      }
-    } else {
-      return "";
-    }
-  });
-};

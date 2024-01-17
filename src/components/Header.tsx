@@ -4,9 +4,11 @@ import {
   isAuthenticated,
   userSignOut,
   userAccountDetails,
-  getChannelLink,
 } from "../services/firebase.js";
 import { useEffect, useState } from "react";
+
+import { getChannelLink } from "../utils/getChannelLink.js";
+import { auth } from "../config/firebase-config.js";
 
 function Header({ userDetails, channelExists }) {
   const [myChannelLink2, setMyChannelLink2] = useState("");
@@ -17,10 +19,17 @@ function Header({ userDetails, channelExists }) {
   const signOut = async () => {
     userSignOut();
   };
-  getChannelLink().then((response) => {
-    console.log("sssssssssssssss", response);
-    setMyChannelLink2(response);
-  });
+  const fetchLink = async () => {
+    const link = await getChannelLink();
+    setMyChannelLink2(link);
+  };
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      fetchLink();
+    }
+  }, [auth.currentUser]);
+
   useEffect(() => {
     console.log("!!!!!!!!!!!!!!!!!!!!!!!!", myChannelLink2);
   }, [myChannelLink2]);
