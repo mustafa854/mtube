@@ -2,19 +2,11 @@ import { Link } from "react-router-dom";
 import { useUser } from "../context/User.tsx";
 import { isAuthenticated, userAccountDetails } from "../services/firebase.ts";
 import { auth } from "../config/firebase-config.ts";
-import { createChannel } from "../utils/createChannel.ts";
 
 function UserProfile() {
   const { myChannelLink, setMyChannelLink, userDetails, setUserDetails } =
     useUser();
   console.log(auth.currentUser);
-
-  const createMyChannel = async () => {
-    if (myChannelLink === "" || myChannelLink === undefined) {
-      const response = await createChannel();
-      setMyChannelLink(response);
-    }
-  };
 
   if (auth.currentUser === null) {
     return (
@@ -89,13 +81,13 @@ function UserProfile() {
           ) : (
             <div className="flex flex-row gap-3  content-center justify-center">
               <div className="my-auto">
-                <button
+                <Link
                   type="button"
                   className="hover:bg-slate-800 bg-black text-white p-2 px-4 ml-5 rounded-md"
-                  onClick={createMyChannel}
+                  to="/create-channels/"
                 >
                   Create Channel
-                </button>
+                </Link>
               </div>
             </div>
           )}

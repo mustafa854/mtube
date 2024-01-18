@@ -159,8 +159,10 @@ function ChannelsDetail() {
               path="edit_profile"
               element={
                 <EditProfile
-                //   id={id}
-                //   currentChannelVideos={currentChannelVideos}
+                  channelDetail={channelDetail}
+                  setChannelDetail={setChannelDetail}
+                  //   id={id}
+                  //   currentChannelVideos={currentChannelVideos}
                 />
               }
             />

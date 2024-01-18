@@ -117,10 +117,10 @@ if logged in and my channel then u can upload here
 - Channels Detail View
 - Videos Detail View
 - Home Page
+- create channel Form
+- edit channel/profile form (To edit Profile)
 
 In Progress:
-- create channel Form (Currently Channels are created with default Values)
-- edit channel/profile form (To edit Profile)
 - edit video form (Editing Uploaded Videos)
 
 To do:
@@ -129,3 +129,5 @@ To do:
 - searchBar
 - subscribe
 - Views
+- Dark Mode
+- Mobile Responsive

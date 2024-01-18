@@ -22,6 +22,7 @@ import { auth } from "./config/firebase-config.ts";
 import { useUser } from "./context/User.tsx";
 import { useVideoAndChannel } from "./context/VideoAndChannel.tsx";
 import ChannelsDetail from "./pages/channelsDetail.tsx";
+import CreateChannel from "./pages/createChannel.tsx";
 
 function App() {
   const { myChannelLink, setMyChannelLink, userDetails, setUserDetails } =
@@ -95,6 +96,7 @@ function App() {
         <Route path="/:id" element={<VideoDetails />} />
         <Route path="channels" element={<ChannelList />} />
         <Route path="my-account" element={<UserProfile />} />
+        <Route path="/create-channels/" element={<CreateChannel />} />
         <Route path="/channels/:id/*" element={<ChannelsDetail />} />
         <Route element={<NotFound />} />
       </Routes>

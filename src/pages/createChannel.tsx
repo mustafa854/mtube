@@ -1,50 +1,46 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { updateChannel } from "../../utils/updateChannel";
-import { useUser } from "../../context/User";
-import { getCurrentChannel } from "../../services/firebase";
+import { useUser } from "../context/User";
+import { createChannel } from "../utils/createChannel";
+import { useState } from "react";
 
-function EditProfile({ channelDetail, setChannelDetail }) {
+function CreateChannel() {
   const { myChannelLink, setMyChannelLink } = useUser();
 
-  const [channelName, setChannelName] = useState(channelDetail.channelName);
-  const [channelAbout, setChannelAbout] = useState(channelDetail.channelAbout);
-  const [channelCover, setChannelCover] = useState(channelDetail.channelCover);
-  const [channelImage, setChannelImage] = useState(channelDetail.channelImage);
-  const [message, setMessage] = useState("");
-  const getCurrentChannelInfo = async () => {
-    const response = await getCurrentChannel(myChannelLink);
-    setChannelDetail(response);
-  };
-
+  const [channelName, setChannelName] = useState("");
+  const [channelAbout, setChannelAbout] = useState("");
+  const [channelCover, setChannelCover] = useState("");
+  const [channelImage, setChannelImage] = useState("");
   const submitForm = async (e) => {
     e.preventDefault();
-    if (myChannelLink !== "" || myChannelLink !== undefined) {
-      const response = await updateChannel(
+    if (myChannelLink === "" || myChannelLink === undefined) {
+      const response = await createChannel(
         channelName,
         channelAbout,
         channelCover,
-        channelImage,
-        myChannelLink
+        channelImage
       );
-      await getCurrentChannelInfo();
-      setMessage("Your Channel has been Updated Successfully!!!");
+      setMyChannelLink(response);
+      setChannelName("");
+      setChannelAbout("");
+      setChannelCover("");
+      setChannelImage("");
     }
   };
+
   return (
     <>
-      {myChannelLink === "" && myChannelLink === undefined ? (
+      {myChannelLink !== "" && myChannelLink !== undefined ? (
         <div className="flex flex-row gap-3  content-center justify-center">
           <div className="my-auto">
             <p className="my-auto font-bold	">Channel Link:</p>
           </div>
           <div>
-            <Link
-              type="button"
-              className="hover:bg-slate-800 bg-black text-white p-2 px-4 ml-5 rounded-md"
-              to="/create-channels/"
-            >
-              Create Channel
+            <Link to={"/channels/" + myChannelLink + "/edit_profile"}>
+              <p className="my-auto text-sky-600">
+                {"https://localhost/channels/" +
+                  myChannelLink +
+                  "/edit_profile"}
+              </p>
             </Link>
           </div>
         </div>
@@ -129,16 +125,9 @@ function EditProfile({ channelDetail, setChannelDetail }) {
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mx-auto px-4 rounded focus:outline-none focus:shadow-outline"
                       type="submit"
                     >
-                      Update Channel
+                      Create Channel
                     </button>
                   </div>
-                  {message === "" ? (
-                    <></>
-                  ) : (
-                    <div className="flex flex-row">
-                      <p className="mx-auto mt-5 text-green-500">{message}</p>
-                    </div>
-                  )}
                 </form>
               </div>
             </div>
@@ -148,5 +137,4 @@ function EditProfile({ channelDetail, setChannelDetail }) {
     </>
   );
 }
-
-export default EditProfile;
+export default CreateChannel;

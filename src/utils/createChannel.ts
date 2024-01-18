@@ -3,18 +3,22 @@ import { collection, serverTimestamp } from "firebase/firestore";
 import { runTransaction, doc } from "firebase/firestore";
 import { useState } from "react";
 
-export const createChannel = async () => {
+export const createChannel = async (
+  channelName,
+  channelAbout,
+  channelCover,
+  channelImage
+) => {
   const user = auth.currentUser;
   if (user) {
     const docRef = doc(collection(db, "channels"));
     await runTransaction(db, async (transaction) => {
       transaction.set(docRef, {
         Subscribers: 0,
-        channelAbout: "Lorem ipsum dolor sit",
-        channelCover:
-          "https://yt3.googleusercontent.com/yRpqaOMm_A8kIIjWXeAI6hbl5NXa6_I5Cfc2oDAkCDaUoshsewWOZPl9e2DdtU5I8vkSp0B9Gg=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
-        channelImage: user.photoURL,
-        channelName: user.displayName,
+        channelAbout: channelAbout,
+        channelCover: channelCover,
+        channelImage: channelImage,
+        channelName: channelName,
         channelsId: docRef.id,
         createdAt: serverTimestamp(),
         user_id: user.uid,
