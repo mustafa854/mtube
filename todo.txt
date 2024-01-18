@@ -69,6 +69,60 @@ hide edit profile and upload video on others profile
 edit uploaded video form
 
 
-
+tOAST nOTIFICATION
+POPUP FOR REQUEST SIGNING
+PRIVATE ROUTES
 
 For post request send tken given by firebase
+
+/*
+*
+*
+*
+create channel Form
+edit channel/profile form
+edit video form
+*
+*
+*
+*/
+likes
+views
+subscribe
+comment
+
+Add form validation on every form and message wne successflly submitted or error when validation error occurs 
+
+if logged in but no channel link===========create channel and can't upload here
+if not logged========================login
+if logged in but channel link===========can't upload here, upload at your channel
+
+
+if logged in and my channel then u can upload here
+
+
+
+404 error for incorrect channel
+
+
+
+
+
+
+
+- Converted from Local States to Global State 
+- User Authentication
+- User Channel Creation
+- User Video Upload
+- Channels Detail View
+- Videos Detail View
+- Home Page
+
+In Progress:
+- create channel Form (Currently Channels are created with default Values)
+- edit channel/profile form (To edit Profile)
+- edit video form (Editing Uploaded Videos)
+
+To do:
+- Likes
+- Comment

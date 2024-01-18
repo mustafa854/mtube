@@ -53,6 +53,7 @@ export const getChannelVideos = async (id) => {
   let channelVideos = [];
   querySnapshot.forEach((doc) => {
     channelVideos.push(doc.data());
+    console.log(doc.data());
   });
   return channelVideos;
 };
@@ -160,8 +161,15 @@ export const currentChannelDetail = async (id) => {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    console.log(docSnap.data());
-    return docSnap.data();
+    let output = docSnap.data();
+    const firebaseTimestamp = docSnap.data().createdAt;
+    const jsDate = new Date(firebaseTimestamp.seconds * 1000)
+      .toISOString()
+      .split("T")[0];
+    output.createdAt = String(jsDate);
+
+    // console.log(docSnap.data());
+    return output;
   } else {
     return { error: "Channel Doesn't exists" };
   }

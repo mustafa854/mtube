@@ -14,7 +14,6 @@ import Home from "./pages/home";
 import VideoDetails from "./pages/videoDetail";
 import NotFound from "./pages/notFound";
 import ChannelList from "./pages/channelsList";
-import ChannelsDetail from "./pages/channelsDetail.tsx";
 import ChannelUserProfile from "./pages/channelUserProfile.tsx";
 import UploadVideoProfile from "./pages/uploadVideoProfile";
 import EditProfile from "./pages/editProfile";
@@ -22,6 +21,7 @@ import UserProfile from "./pages/userProfile.tsx";
 import { auth } from "./config/firebase-config.ts";
 import { useUser } from "./context/User.tsx";
 import { useVideoAndChannel } from "./context/VideoAndChannel.tsx";
+import ChannelsDetail from "./pages/channelsDetail.tsx";
 
 function App() {
   const { myChannelLink, setMyChannelLink, userDetails, setUserDetails } =
@@ -42,16 +42,16 @@ function App() {
       fetchUserDetails();
     }
   }, [auth.currentUser]);
-  useEffect(() => {
-    console.log(
-      "isLoggedIn: ",
-      auth.currentUser,
-      " myChannelLink: ",
-      myChannelLink,
-      "user details",
-      userDetails
-    );
-  }, [auth.currentUser, myChannelLink, userDetails]);
+  // useEffect(() => {
+  //   console.log(
+  //     "isLoggedIn: ",
+  //     auth.currentUser,
+  //     " myChannelLink: ",
+  //     myChannelLink,
+  //     "user details",
+  //     userDetails
+  //   );
+  // }, [auth.currentUser, myChannelLink, userDetails]);
 
   /**
    *
@@ -62,7 +62,7 @@ function App() {
     response.forEach((element) => {
       setChannels((prevArray) => [...prevArray, element.data()]);
     });
-    console.log(channels);
+    // console.log(channels);
   };
   const fetchVideos = async () => {
     const response = await getVideos();
@@ -83,10 +83,10 @@ function App() {
       fetchVideos();
     }
   }, []);
-  useEffect(() => {
-    console.log(videos);
-    console.log(channels);
-  }, [videos, channels]);
+  // useEffect(() => {
+  //   console.log(videos);
+  //   console.log(channels);
+  // }, [videos, channels]);
   return (
     <Router>
       <Header />
@@ -95,11 +95,7 @@ function App() {
         <Route path="/:id" element={<VideoDetails />} />
         <Route path="channels" element={<ChannelList />} />
         <Route path="my-account" element={<UserProfile />} />
-        <Route path="/channels/:id" element={<ChannelsDetail />} />
-        <Route path="/channels/:id/videos" element={<ChannelsDetail />} />
-        <Route path="/channels/:id/upload" element={<UploadVideoProfile />} />
-        <Route path="/channels/:id/edit_profile" element={<EditProfile />} />
-        <Route path="/channels/:id/profile" element={<ChannelUserProfile />} />
+        <Route path="/channels/:id/*" element={<ChannelsDetail />} />
         <Route element={<NotFound />} />
       </Routes>
     </Router>

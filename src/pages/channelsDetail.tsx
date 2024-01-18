@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { getCurrentChannel, getChannelVideos } from "../services/firebase.ts";
-import VideoCard from "../components/videocard";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
+import { getChannelVideos } from "../services/firebase.ts";
 import { currentChannelDetail } from "./../services/firebase";
-import { useVideoAndChannel } from "./../context/VideoAndChannel";
+import { Routes, Route } from "react-router-dom";
+import DashboardVideos from "./../components/channelDetail/dashboardVideos";
+import UploadVideos from "../components/channelDetail/uploadVideos.tsx";
+import EditProfile from "../components/channelDetail/editProfile.tsx";
+import Profile from "../components/channelDetail/profile.tsx";
+import { useUser } from "../context/User.tsx";
 
 function ChannelsDetail() {
   const { id } = useParams();
+  const location = useLocation();
+  //   console.log("location: ", location, "path: ", "/channel/" + id);
   const [currentId, setCurrentId] = useState(id);
   const [channelDetail, setChannelDetail] = useState({});
   const [currentChannelVideos, setCurrentChannelVideos] = useState([]);
-  const { channels } = useVideoAndChannel();
+  const { myChannelLink } = useUser();
+  const returnActiveClasses = () => {
+    return "text-black  font-semibold border-b-4 pb-3 border-black";
+  };
   useEffect(() => {
     setCurrentId(id);
   }, [id]);
@@ -21,6 +30,7 @@ function ChannelsDetail() {
       setChannelDetail(channelResponse);
       const videoResponse = await getChannelVideos(id);
       setCurrentChannelVideos(videoResponse);
+      console.log(videoResponse);
     } else {
       setChannelDetail({ error: "Video Doesn't exists" });
     }
@@ -33,7 +43,7 @@ function ChannelsDetail() {
   if (channelDetail.channelsId) {
     return (
       <>
-        <div className="container mt-2 w-5/6 flex flex-col mx-auto">
+        <div className="container mt-2 w-5/6 flex flex-col mx-auto mb-10">
           <div className="container h-64">
             <img
               src={channelDetail.channelCover}
@@ -77,22 +87,105 @@ function ChannelsDetail() {
           <div className="flex flex-row gap-5 mt-5 text-neutral-700 border-b-2">
             <Link
               to={"/channels/" + id}
-              className="text-black  font-semibold border-b-4 pb-3 border-black"
+              className={
+                location.pathname == "/channels/" + id
+                  ? returnActiveClasses()
+                  : ""
+              }
             >
               Videos
             </Link>
-            <Link to={"/channels/" + id + "/upload"}>Upload Videos</Link>
-            <Link to={"/channels/" + id + "/edit_profile"}>Edit Profile</Link>
-            <Link to={"/channels/" + id + "/profile"}>Profile</Link>
-          </div>
 
-          <div className="container">
+            <Link
+              to={"/channels/" + id + "/profile"}
+              className={
+                location.pathname == "/channels/" + id + "/profile"
+                  ? returnActiveClasses()
+                  : ""
+              }
+            >
+              Profile
+            </Link>
+
+            {myChannelLink === id ? (
+              <>
+                <Link
+                  to={"/channels/" + id + "/upload"}
+                  className={
+                    location.pathname == "/channels/" + id + "/upload"
+                      ? returnActiveClasses()
+                      : ""
+                  }
+                >
+                  Upload Videos
+                </Link>
+                <Link
+                  to={"/channels/" + id + "/edit_profile"}
+                  className={
+                    location.pathname == "/channels/" + id + "/edit_profile"
+                      ? returnActiveClasses()
+                      : ""
+                  }
+                >
+                  Edit Profile
+                </Link>
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <DashboardVideos
+                  id={id}
+                  currentChannelVideos={currentChannelVideos}
+                />
+              }
+            />
+            <Route
+              path="upload"
+              element={
+                <UploadVideos
+                  id={id}
+                  currentChannelVideos={currentChannelVideos}
+                  setCurrentChannelVideos={setCurrentChannelVideos}
+                />
+              }
+            />
+            <Route
+              path="edit_profile"
+              element={
+                <EditProfile
+                //   id={id}
+                //   currentChannelVideos={currentChannelVideos}
+                />
+              }
+            />
+            <Route
+              path="profile"
+              element={
+                <Profile
+                  id={id}
+                  currentChannelVideos={currentChannelVideos}
+                  channelDetail={channelDetail}
+                  setCurrentId={setCurrentId}
+                />
+              }
+            />
+          </Routes>
+
+          <Outlet />
+
+          {/* <div className="container">
             <div className="video-wrapper grid grid-cols-3 gap-3 mt-6 mb-5">
               {currentChannelVideos.map((video) => (
                 <VideoCard key={video.id} video={video} />
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </>
     );
