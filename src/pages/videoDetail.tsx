@@ -10,14 +10,48 @@ function VideoDetails() {
   const [currentId, setCurrentId] = useState(id);
   const [videoDetail, setVideoDetail] = useState({});
   const { videos } = useVideoAndChannel();
+  const [timePosted, setTimePost] = useState("");
+  const [datePostedStrFormat, setDatePostedStrFormat] = useState("");
   useEffect(() => {
     setCurrentId(id);
   }, [id]);
 
+  const getPublishedDate = () => {
+    const nowInSeconds = Math.floor(Date.now() / 1000);
+    let timeUsed = nowInSeconds - videoDetail.publishDate.seconds;
+    if (timeUsed < 60) {
+      setTimePost(String(Math.floor(timeUsed)) + " seconds");
+    } else if (timeUsed < 60 * 60) {
+      setTimePost(String(Math.floor(timeUsed / 60)) + " minutes");
+    } else if (timeUsed < 60 * 60 * 24) {
+      setTimePost(String(Math.floor(timeUsed / (60 * 60))) + " hours");
+    } else if (timeUsed < 60 * 60 * 24 * 30) {
+      setTimePost(String(Math.floor(timeUsed / (60 * 60 * 24))) + " days");
+    } else if (timeUsed < 60 * 60 * 24 * 30 * 12) {
+      setTimePost(
+        String(Math.floor(timeUsed / (60 * 60 * 24 * 30))) + " months"
+      );
+    } else {
+      setTimePost(
+        String(Math.floor(timeUsed / (60 * 60 * 24 * 30 * 12))) + " years"
+      );
+    }
+  };
+  const getDatePostedStrFormat = () => {
+    const jsDate = videoDetail.publishDate.toDate();
+    let day = jsDate.getDate();
+    let month = jsDate.toLocaleString("default", { month: "long" });
+    let year = jsDate.getFullYear();
+    let formattedDate = `${day} ${month} ${year}`;
+
+    setDatePostedStrFormat(formattedDate);
+  };
   const fetchVideoDetail = async () => {
     if (typeof id === "string") {
       const response = await currentVideoDetail(id);
       setVideoDetail(response);
+      getPublishedDate();
+      getDatePostedStrFormat();
     } else {
       setVideoDetail({ error: "Video Doesn't exists" });
     }
@@ -25,12 +59,9 @@ function VideoDetails() {
 
   useEffect(() => {
     fetchVideoDetail();
-  }, [currentId]);
 
-  // useEffect(() => {
-  //   let data = videos.filter((video) => video.id === id);
-  //   setVideoDetail(data[0]);
-  // }, [id, videos]);
+    // getPublishedDate();
+  }, [currentId]);
 
   if (videoDetail.videosId) {
     console.log(videoDetail);
@@ -78,7 +109,9 @@ function VideoDetails() {
                     <h3 className="text-base font-medium">
                       {videoDetail.channel.channelName}
                     </h3>
-                    <h3 className="text-xs font-light">153k Subscribers</h3>
+                    <h3 className="text-xs font-light">
+                      {videoDetail.channel.subscribers} Subscribers
+                    </h3>
                   </div>
                 </Link>
                 <button
@@ -94,8 +127,10 @@ function VideoDetails() {
                 style={{ backgroundColor: "hsla(0,0%,93.3%,0.8)" }}
               >
                 <p className="text-sm font-medium">
-                  {videoDetail.views} Views&nbsp;&nbsp;&nbsp;Publish
-                  Date&nbsp;&nbsp;&nbsp;
+                  {videoDetail.views} Views&nbsp;&nbsp;
+                  {timePosted ? timePosted + " ago" : <></>}&nbsp;&nbsp;
+                  {datePostedStrFormat}
+                  &nbsp;&nbsp;&nbsp;
                   <span className="text-zinc-400">
                     #HASHTAGS #HASHTAGS #HASHTAGS
                   </span>

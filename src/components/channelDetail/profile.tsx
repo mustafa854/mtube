@@ -50,7 +50,11 @@ function Profile({ id, currentChannelVideos, channelDetail, setCurrentId }) {
         </div>
         <div className="container">
           <h3 className="text-black  font-semibold mt-3">Joined Date</h3>
-          <p>{channelDetail.createdAt}</p>
+          <p>
+            {typeof channelDetail.createdAt === "string"
+              ? channelDetail.createdAt
+              : ""}
+          </p>
         </div>
       </div>
       <h3 className="text-black  font-semibold mt-3">Channel Link</h3>

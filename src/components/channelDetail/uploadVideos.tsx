@@ -135,7 +135,7 @@ function UploadVideos({ id, currentChannelVideos, setCurrentChannelVideos }) {
       );
     }
   } else {
-    <h1>Please Login to Upload</h1>;
+    return <h1>Please Login to Upload</h1>;
   }
 }
 

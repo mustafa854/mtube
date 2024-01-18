@@ -21,6 +21,7 @@ export const createVideo = async (
     const docSnap = await getDoc(channelDetail);
     const fetchedChannelName = docSnap.data().channelName;
     const fetchedChannelImage = docSnap.data().channelImage;
+    const fetchedChannelSubscribers = docSnap.data().Subscribers;
     const docRef = doc(collection(db, "videos"));
     await runTransaction(db, async (transaction) => {
       transaction.set(docRef, {
@@ -32,6 +33,7 @@ export const createVideo = async (
         channel: {
           channelName: fetchedChannelName,
           channelImage: fetchedChannelImage,
+          subscribers: fetchedChannelSubscribers,
         },
         description: videoDescription,
         title: videoTitle,
@@ -54,6 +56,7 @@ export const createVideo = async (
       channel: {
         channelName: fetchedChannelName,
         channelImage: fetchedChannelImage,
+        subscribers: fetchedChannelSubscribers,
       },
       description: videoDescription,
       title: videoTitle,

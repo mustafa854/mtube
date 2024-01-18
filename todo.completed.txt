@@ -1,0 +1,37 @@
+Troubleshoot dates error on video details page and change channels page date as classical date with month and year format(22 June 2017 )
+
+
+
+
+
+
+
+
+
+create channel form
+channelDetailrefactor code
+create channel page | upload video page
+create channel Form
+edit channel/profile form
+user profile and show his uploaded videos
+only authentcated user can upload video
+channels page.
+handle updtes to channel name and description after it has been created
+add admn panel to upload videos on firebase
+loggedin user profile
+currentUser Account Page
+create channel for loggedinUser
+add auth and channel relation to auth model
+if videos on channel=0, then show 0 videos uploaded
+
+
+
+- Converted from Local States to Global State 
+- User Authentication
+- User Channel Creation
+- User Video Upload
+- Channels Detail View
+- Videos Detail View
+- Home Page
+- create channel Form
+- edit channel/profile form (To edit Profile)

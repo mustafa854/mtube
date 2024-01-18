@@ -1,0 +1,10 @@
+if logged in but no channel link===========create channel and can't upload here
+if not logged========================login
+if logged in but channel link===========can't upload here, upload at your channel
+
+
+if logged in and my channel then u can upload here
+
+
+
+404 error for incorrect channel

@@ -1,73 +1,26 @@
+edit uploaded videos
+Authentoication and permissions wherever requiredx
+
 add pagination to homepage videos
 add tags to videos and filtering on homepage top below headers based on these tags for videos
 
-
-
-add admn panel to upload videos on firebase
-
-
-add auth and channel relation to auth model
-
 make video play on hover card
-
 make video cards carousel on homepage
-
-responsive on mobile and small device
-
 implementing views, date, nav bar
+verified channels
+accordion on channels details page for about info and on video description
 
 video category
 
-channels page.
-
-
 make description wyswyg editor and formatting and read more button
-
-edit uploaded videos
 
 Views like dislike share comment subscribe
 
-Authentoication and permissions wherever requiredx
-
-Search Bar
-
-only authentcated user can upload video
-handle updtes to channel name and description after it has been created
-
-user profile and show his uploaded videos
-
-verify channels
-
-create channel page | upload video page
-
 Protected Routes (also protect /my-account/)
-
-channelDetailrefactor code
-
-loggedin user profile
-
-currentUser Account Page
-
-create channel for loggedinUser
-
-accordion on channels details page for about info and on video description
-
-
-
-
-create channel form
-
-if videos on channel=0, then show 0 videos uploaded
-
-
 
 hide edit profile and upload video on others profile
 
-
-
-
 edit uploaded video form
-
 
 tOAST nOTIFICATION
 POPUP FOR REQUEST SIGNING
@@ -75,50 +28,7 @@ PRIVATE ROUTES
 
 For post request send tken given by firebase
 
-/*
-*
-*
-*
-create channel Form
-edit channel/profile form
-edit video form
-*
-*
-*
-*/
-likes
-views
-subscribe
-comment
-
 Add form validation on every form and message wne successflly submitted or error when validation error occurs 
-
-if logged in but no channel link===========create channel and can't upload here
-if not logged========================login
-if logged in but channel link===========can't upload here, upload at your channel
-
-
-if logged in and my channel then u can upload here
-
-
-
-404 error for incorrect channel
-
-
-
-
-
-
-
-- Converted from Local States to Global State 
-- User Authentication
-- User Channel Creation
-- User Video Upload
-- Channels Detail View
-- Videos Detail View
-- Home Page
-- create channel Form
-- edit channel/profile form (To edit Profile)
 
 In Progress:
 - edit video form (Editing Uploaded Videos)
@@ -131,3 +41,7 @@ To do:
 - Views
 - Dark Mode
 - Mobile Responsive
+
+subscribed channels list
+liked vidoes list
+subscribers channel calculation total channels subscribed to calculation

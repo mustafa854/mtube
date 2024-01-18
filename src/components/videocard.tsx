@@ -1,6 +1,56 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function VideoCard({ video }) {
+  const [timePosted, setTimePost] = useState("");
+  // const getPublishedDate = () => {
+  //   const nowInSeconds = Math.floor(Date.now() / 1000);
+  //   var timeUsed = (nowInSeconds - video.publishDate.seconds) / 60;
+  //   if (timeUsed < 60) {
+  //     setTimePost(String(Math.floor(timeUsed)) + " minutes");
+  //   }
+  //   var timeUsed = timeUsed / 60;
+  //   if (timeUsed < 24) {
+  //     setTimePost(String(Math.floor(timeUsed)) + " hours");
+  //   }
+  //   var timeUsed = timeUsed / 24;
+  //   if (timeUsed < 30) {
+  //     setTimePost(String(Math.floor(timeUsed)) + " days");
+  //   }
+  //   var timeUsed = timeUsed / 30;
+  //   if (timeUsed < 12) {
+  //     setTimePost(String(Math.floor(timeUsed)) + " months");
+  //   }
+  //   var timeUsed = timeUsed / 12;
+  //   setTimePost(String(Math.floor(timeUsed)) + " years");
+  // };
+
+  const getPublishedDate = () => {
+    const nowInSeconds = Math.floor(Date.now() / 1000);
+    let timeUsed = nowInSeconds - video.publishDate.seconds;
+    if (timeUsed < 60) {
+      setTimePost(String(Math.floor(timeUsed)) + " seconds");
+    } else if (timeUsed < 60 * 60) {
+      setTimePost(String(Math.floor(timeUsed / 60)) + " minutes");
+    } else if (timeUsed < 60 * 60 * 24) {
+      setTimePost(String(Math.floor(timeUsed / (60 * 60))) + " hours");
+    } else if (timeUsed < 60 * 60 * 24 * 30) {
+      setTimePost(String(Math.floor(timeUsed / (60 * 60 * 24))) + " days");
+    } else if (timeUsed < 60 * 60 * 24 * 30 * 12) {
+      setTimePost(
+        String(Math.floor(timeUsed / (60 * 60 * 24 * 30))) + " months"
+      );
+    } else {
+      setTimePost(
+        String(Math.floor(timeUsed / (60 * 60 * 24 * 30 * 12))) + " years"
+      );
+    }
+  };
+
+  useEffect(() => {
+    getPublishedDate();
+  }, []);
+
   return (
     <div className="video-card">
       <div className="video-card--img">
@@ -45,7 +95,7 @@ function VideoCard({ video }) {
                   •
                 </p>
                 <p className="upload-date text-sm pl-2 font-normal text-gray-500">
-                  Upload Date
+                  {timePosted} ago
                 </p>
               </div>
             </Link>

@@ -161,7 +161,7 @@ function ChannelsDetail() {
                 <EditProfile
                   channelDetail={channelDetail}
                   setChannelDetail={setChannelDetail}
-                  //   id={id}
+                  id={id}
                   //   currentChannelVideos={currentChannelVideos}
                 />
               }
