@@ -1,55 +1,17 @@
 import { Link } from "react-router-dom";
-import {
-  googleSignin,
-  isAuthenticated,
-  userSignOut,
-  userAccountDetails,
-} from "../services/firebase.js";
-import { useEffect, useState } from "react";
-
-import { getChannelLink } from "../utils/getChannelLink.js";
+import { googleSignin, userSignOut } from "../services/firebase.ts";
 import { auth } from "../config/firebase-config.js";
+import { useUser } from "../context/User.tsx";
 
-function Header({ userDetails, channelExists }) {
-  const [myChannelLink2, setMyChannelLink2] = useState("");
+function Header() {
+  const { myChannelLink, userDetails } = useUser();
+
   const signIn = async () => {
     googleSignin();
-    let userDetails = userAccountDetails();
   };
   const signOut = async () => {
     userSignOut();
   };
-  const fetchLink = async () => {
-    const link = await getChannelLink();
-    setMyChannelLink2(link);
-  };
-
-  useEffect(() => {
-    if (auth.currentUser) {
-      fetchLink();
-    }
-  }, [auth.currentUser]);
-
-  useEffect(() => {
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!", myChannelLink2);
-  }, [myChannelLink2]);
-
-  if (isAuthenticated()) {
-    if (userDetails === false) {
-      var userDetails = userAccountDetails();
-      var userPhotoUrl = userDetails[0];
-      var userEmail = userDetails[0];
-      var userDisplayName = userDetails[0];
-      var userProviderData = userDetails[0];
-    } else {
-      var userPhotoUrl = userDetails[0];
-      var userEmail = userDetails[0];
-      var userDisplayName = userDetails[0];
-      var userProviderData = userDetails[0];
-    }
-  }
-  console.log(isAuthenticated());
-  console.log("exists????????????", channelExists);
 
   return (
     <>
@@ -81,30 +43,14 @@ function Header({ userDetails, channelExists }) {
             />
           </div>
           <div className="">
-            {isAuthenticated() === false ? (
-              <>
-                <button
-                  type="button"
-                  className="flex flex-row hover:bg-sky-100 hover:border-sky-100 justify-center	items-center text-sky-600 p-2 border border-slate-200 rounded-full pt-0 pb-1"
-                  onClick={signIn}
-                >
-                  <img
-                    src="/src/assets/profile.svg"
-                    className="header-icon pt-1 pr-2 fill-current text-sky-600"
-                    alt=""
-                  />
-                  Signin
-                </button>
-              </>
-            ) : (
+            {auth.currentUser ? (
               <>
                 <div className="container flex flex-row gap-8">
-                  {myChannelLink2 !== "" ? (
+                  {myChannelLink !== "" && myChannelLink !== undefined ? (
                     <Link
-                      to={"/channels/" + myChannelLink2}
+                      to={"/channels/" + myChannelLink}
                       className="flex flex-row justify-center content-center"
                     >
-                      {" "}
                       <p className="my-auto mr-2">My Channel</p>
                     </Link>
                   ) : (
@@ -112,7 +58,6 @@ function Header({ userDetails, channelExists }) {
                       to="/my-account"
                       className="flex flex-row justify-center content-center"
                     >
-                      {" "}
                       <p className="my-auto mr-2">Create Channel</p>
                     </Link>
                   )}
@@ -125,7 +70,7 @@ function Header({ userDetails, channelExists }) {
                       {" "}
                       <p className="my-auto mr-2">My Account</p>
                       <img
-                        src={userPhotoUrl}
+                        src={userDetails.photo}
                         alt=""
                         className="mx-auto"
                         style={{
@@ -149,6 +94,21 @@ function Header({ userDetails, channelExists }) {
                     Logout
                   </button>
                 </div>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="flex flex-row hover:bg-sky-100 hover:border-sky-100 justify-center	items-center text-sky-600 p-2 border border-slate-200 rounded-full pt-0 pb-1"
+                  onClick={signIn}
+                >
+                  <img
+                    src="/src/assets/profile.svg"
+                    className="header-icon pt-1 pr-2 fill-current text-sky-600"
+                    alt=""
+                  />
+                  Signin
+                </button>
               </>
             )}
           </div>

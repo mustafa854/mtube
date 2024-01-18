@@ -51,3 +51,24 @@ currentUser Account Page
 create channel for loggedinUser
 
 accordion on channels details page for about info and on video description
+
+
+
+
+create channel form
+
+if videos on channel=0, then show 0 videos uploaded
+
+
+
+hide edit profile and upload video on others profile
+
+
+
+
+edit uploaded video form
+
+
+
+
+For post request send tken given by firebase

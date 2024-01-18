@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getCurrentChannel, getChannelVideos } from "../services/firebase";
+import { getCurrentChannel, getChannelVideos } from "../services/firebase.ts";
 import VideoCard from "../components/videocard";
 
 function UploadVideoProfile({ channels }) {

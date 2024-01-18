@@ -6,14 +6,14 @@ import {
   query,
   where,
   getDocs,
+  setDoc,
 } from "firebase/firestore";
-import { db, provider } from "./../config/firebase-config";
+import { db, provider } from "../config/firebase-config";
 import {
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
   signOut,
-  onAuthStateChanged,
 } from "firebase/auth";
 
 const qVideos = query(collection(db, "videos"));
@@ -52,12 +52,8 @@ export const getChannelVideos = async (id) => {
   const querySnapshot = await getDocs(qChannelVideos);
   let channelVideos = [];
   querySnapshot.forEach((doc) => {
-    let tempData = doc.data();
-    console.log("tempdata", tempData);
-    tempData.id = doc.id;
-    channelVideos.push(tempData);
+    channelVideos.push(doc.data());
   });
-  console.log("channel videos", channelVideos);
   return channelVideos;
 };
 
@@ -73,10 +69,23 @@ export const googleSignin = () => {
       const user = result.user;
       // IdP data available using getAdditionalUserInfo(result)
       // ...
-      console.log(user);
-      console.log(token);
-      location.reload();
+      // console.log(user);
+      // console.log(token);
+      const docRef = doc(db, "userMeta", user.uid);
+
+      // Set the document's data
+      return setDoc(
+        docRef,
+        {
+          // Add any additional user information you want to store here
+          email: user.email,
+          userMetaId: docRef.id,
+          user_uid: user.uid,
+        },
+        { merge: true }
+      );
     })
+    .then((result) => location.reload())
     .catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
@@ -88,7 +97,10 @@ export const googleSignin = () => {
       // ...
     });
 };
-
+/**
+ *
+ * Returns Whether a User is LoggedIn or not
+ */
 export const isAuthenticated = () => {
   const user = auth.currentUser;
   if (user) {
@@ -113,6 +125,44 @@ export const userAccountDetails = () => {
   const user = auth.currentUser;
 
   if (user !== null) {
+    return {
+      photo: user.photoURL,
+      email: user.email,
+      name: user.displayName,
+      registerMethod: user.providerData[0].providerId,
+      phone: user.providerData[0].phoneNumber,
+    };
+  }
+};
+
+export const userAccountDetails2 = () => {
+  const user = auth.currentUser;
+
+  if (user !== null) {
     return [user.photoURL, user.email, user.displayName, user.providerData];
+  }
+};
+
+export const currentVideoDetail = async (id) => {
+  const docRef = doc(db, "videos", id);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log(docSnap.data());
+    return docSnap.data();
+  } else {
+    return { error: "Video Doesn't exists" };
+  }
+};
+
+export const currentChannelDetail = async (id) => {
+  const docRef = doc(db, "channels", id);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log(docSnap.data());
+    return docSnap.data();
+  } else {
+    return { error: "Channel Doesn't exists" };
   }
 };

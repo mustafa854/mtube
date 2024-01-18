@@ -5,7 +5,7 @@ function VideoCard2({ video }) {
     <>
       <div className="video-card flex flex-row mb-2">
         <div className="video-card--img width-9-20">
-          <Link to={"/" + video.id}>
+          <Link to={"/" + video.videosId}>
             <img
               src={video.videoThumbnail}
               className="border rounded-lg w-full"
@@ -15,7 +15,7 @@ function VideoCard2({ video }) {
         </div>
         <div className="video-card--content flex flex-row width-11-20 pl-2">
           <div className="video-details">
-            <Link to={"/" + video.id}>
+            <Link to={"/" + video.videosId}>
               <h4 className="video-title font-medium leading-5 text-sm pb-1">
                 {video.title.length > 40
                   ? video.title.slice(0, 40) + "..."
@@ -28,7 +28,7 @@ function VideoCard2({ video }) {
                   {video.channel.channelName}
                 </p>
               </Link>
-              <Link to={"/" + video.id}>
+              <Link to={"/" + video.videosId}>
                 <div className="video-meta flex flex-row">
                   <p className="view-count text-xs font-normal text-gray-500">
                     {video.views} Views

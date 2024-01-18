@@ -4,7 +4,7 @@ function VideoCard({ video }) {
   return (
     <div className="video-card">
       <div className="video-card--img">
-        <Link to={"/" + video.id}>
+        <Link to={"/" + video.videosId}>
           <img
             src={video.videoThumbnail}
             className="border rounded-xl	"
@@ -23,7 +23,7 @@ function VideoCard({ video }) {
           </Link>
         </div>
         <div className="video-details pl-4">
-          <Link to={"/" + video.id}>
+          <Link to={"/" + video.videosId}>
             <h4 className="video-title font-medium leading-6 text-lg">
               {video.title.length > 40
                 ? video.title.slice(0, 60) + "..."
@@ -36,7 +36,7 @@ function VideoCard({ video }) {
                 {video.channel.channelName}
               </p>
             </Link>
-            <Link to={"/" + video.id}>
+            <Link to={"/" + video.videosId}>
               <div className="video-meta flex flex-row">
                 <p className="view-count text-sm font-normal text-gray-500">
                   {video.views} Views

@@ -2,17 +2,37 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import VideoCard2 from "../components/videoCard2";
 import { Link } from "react-router-dom";
+import { currentVideoDetail } from "../services/firebase";
+import { useVideoAndChannel } from "../context/VideoAndChannel";
 
-function VideoDetails({ videos }) {
+function VideoDetails() {
   const { id } = useParams();
-  const [videoDetail, setVideoDetail] = useState();
+  const [currentId, setCurrentId] = useState(id);
+  const [videoDetail, setVideoDetail] = useState({});
+  const { videos } = useVideoAndChannel();
+  useEffect(() => {
+    setCurrentId(id);
+  }, [id]);
+
+  const fetchVideoDetail = async () => {
+    if (typeof id === "string") {
+      const response = await currentVideoDetail(id);
+      setVideoDetail(response);
+    } else {
+      setVideoDetail({ error: "Video Doesn't exists" });
+    }
+  };
 
   useEffect(() => {
-    let data = videos.filter((video) => video.id === id);
-    setVideoDetail(data[0]);
-  }, [id, videos]);
+    fetchVideoDetail();
+  }, [currentId]);
 
-  if (videoDetail) {
+  // useEffect(() => {
+  //   let data = videos.filter((video) => video.id === id);
+  //   setVideoDetail(data[0]);
+  // }, [id, videos]);
+
+  if (videoDetail.videosId) {
     console.log(videoDetail);
     return (
       <>
@@ -29,6 +49,7 @@ function VideoDetails({ videos }) {
                 allowFullScreen
                 className="rounded-xl mx-auto"
               ></iframe>
+
               <h2 className="text-xl font-bold leading-7 mt-3">
                 {videoDetail.title}
               </h2>
@@ -84,13 +105,17 @@ function VideoDetails({ videos }) {
             </div>
           </div>
           <div className="w-1/4">
-            {videos.map((video) => (
-              <VideoCard2 video={video} />
-            ))}
+            {videos.map((video) =>
+              video.videosId !== currentId ? <VideoCard2 video={video} /> : ""
+            )}
           </div>
         </div>
       </>
     );
+  } else if (videoDetail.error) {
+    return <h1>404 Error</h1>;
+  } else if (id == undefined) {
+    return <h1>404 Error</h1>;
   } else {
     return <h1>Loading</h1>;
   }

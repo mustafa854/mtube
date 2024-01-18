@@ -3,7 +3,7 @@ function ChannelsCard({ channel }) {
   return (
     <>
       <div className="container p-4 ">
-        <Link to={"/channels/" + channel.id}>
+        <Link to={"/channels/" + channel.channelsId}>
           <div className="flex flex-row border-2 p-4 rounded-md">
             <div>
               <img

@@ -8,8 +8,7 @@ import {
   getVideos,
   getChannels,
   userAccountDetails,
-  isAuthenticated,
-} from "./services/firebase";
+} from "./services/firebase.ts";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
 import VideoDetails from "./pages/videoDetail";
@@ -21,101 +20,90 @@ import UploadVideoProfile from "./pages/uploadVideoProfile";
 import EditProfile from "./pages/editProfile";
 import UserProfile from "./pages/userProfile.tsx";
 import { auth } from "./config/firebase-config.ts";
-function App() {
-  const [videos, setVideos] = useState([]);
-  const [channels, setChannels] = useState([]);
-  const [myChannelLink, setMyChannelLink] = useState("");
-  const shouldFetch = useRef(true);
+import { useUser } from "./context/User.tsx";
+import { useVideoAndChannel } from "./context/VideoAndChannel.tsx";
 
-  if (isAuthenticated()) {
-    var userDetails = userAccountDetails();
-  } else {
-    userDetails = false;
-  }
-  const fetchData = async () => {
-    try {
-      const videosFetched = await getVideos();
-      const channelsFetched = await getChannels();
-      videosFetched.forEach((element) => {
-        let dataAppend = element.data();
-        dataAppend.id = element.id;
-        setVideos((prevArray) => [...prevArray, dataAppend]);
-      });
-      channelsFetched.forEach((element) => {
-        let dataAppend = element.data();
-        dataAppend.id = element.id;
-        setChannels((prevArray) => [...prevArray, dataAppend]);
-      });
-      console.log(channels);
-    } catch (error) {
-      console.error("Error fetching videos:", error);
-    }
+function App() {
+  const { myChannelLink, setMyChannelLink, userDetails, setUserDetails } =
+    useUser();
+  const { videos, setVideos, channels, setChannels } = useVideoAndChannel();
+
+  const fetchIsChannelCreated = async () => {
+    const response = await getChannelLink();
+    setMyChannelLink(response);
   };
+  const fetchUserDetails = async () => {
+    const response = await userAccountDetails();
+    setUserDetails(response);
+  };
+  useEffect(() => {
+    if (auth.currentUser) {
+      fetchIsChannelCreated();
+      fetchUserDetails();
+    }
+  }, [auth.currentUser]);
+  useEffect(() => {
+    console.log(
+      "isLoggedIn: ",
+      auth.currentUser,
+      " myChannelLink: ",
+      myChannelLink,
+      "user details",
+      userDetails
+    );
+  }, [auth.currentUser, myChannelLink, userDetails]);
+
+  /**
+   *
+   *
+   */
+  const fetchChannels = async () => {
+    const response = await getChannels();
+    response.forEach((element) => {
+      setChannels((prevArray) => [...prevArray, element.data()]);
+    });
+    console.log(channels);
+  };
+  const fetchVideos = async () => {
+    const response = await getVideos();
+    response.forEach((element) => {
+      setVideos((prevArray) => [...prevArray, element.data()]);
+    });
+  };
+  // const [videos, setVideos] = useState([]);
+  // const [channels, setChannels] = useState([]);
+
+  const shouldFetch = useRef(true);
 
   useEffect(() => {
     if (shouldFetch.current) {
       shouldFetch.current = false;
 
-      fetchData();
+      fetchChannels();
+      fetchVideos();
     }
   }, []);
-
   useEffect(() => {
-    if (auth.currentUser) {
-      const fetchChannelLink = async () => {
-        const response = await getChannelLink();
-        console.log("Response................", response);
-        setMyChannelLink(response);
-      };
-      return () => fetchChannelLink();
-    }
-  }, [auth.currentUser]);
-
-  useEffect(() => {
-    console.log("............................................", myChannelLink);
-  }, [myChannelLink]);
-  if (videos) {
-    return (
-      <Router>
-        <Header userDetails={userDetails} channelExists={myChannelLink} />
-        <Routes>
-          <Route exact path="/" element={<Home videos={videos} />} />
-          <Route path="/:id" element={<VideoDetails videos={videos} />} />
-          <Route
-            path="channels"
-            element={<ChannelList channels={channels} />}
-          />
-          <Route
-            path="my-account"
-            element={<UserProfile userDetails={userDetails} />}
-          />
-          <Route
-            path="/channels/:id"
-            element={<ChannelsDetail channels={channels} />}
-          />
-          <Route
-            path="/channels/:id/videos"
-            element={<ChannelsDetail channels={channels} />}
-          />
-          <Route
-            path="/channels/:id/upload"
-            element={<UploadVideoProfile channels={channels} />}
-          />
-          <Route
-            path="/channels/:id/edit_profile"
-            element={<EditProfile channels={channels} />}
-          />
-          <Route
-            path="/channels/:id/profile"
-            element={<ChannelUserProfile channels={channels} />}
-          />
-          <Route element={<NotFound />} />
-        </Routes>
-      </Router>
-    );
-  } else {
-    return <h1>Loading Videos...</h1>;
-  }
+    console.log(videos);
+    console.log(channels);
+  }, [videos, channels]);
+  return (
+    <Router>
+      <Header />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/:id" element={<VideoDetails />} />
+        <Route path="channels" element={<ChannelList />} />
+        <Route path="my-account" element={<UserProfile />} />
+        <Route path="/channels/:id" element={<ChannelsDetail />} />
+        <Route path="/channels/:id/videos" element={<ChannelsDetail />} />
+        <Route path="/channels/:id/upload" element={<UploadVideoProfile />} />
+        <Route path="/channels/:id/edit_profile" element={<EditProfile />} />
+        <Route path="/channels/:id/profile" element={<ChannelUserProfile />} />
+        <Route element={<NotFound />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
