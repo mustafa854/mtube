@@ -124,5 +124,8 @@ In Progress:
 - edit video form (Editing Uploaded Videos)
 
 To do:
-- Likes
+- Likes and Dislike
 - Comment
+- searchBar
+- subscribe
+- Views
