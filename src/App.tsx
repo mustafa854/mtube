@@ -23,6 +23,7 @@ import CreateChannel from "./pages/createChannel.tsx";
 import { getCurrentUserLikes } from "./utils/getCurrentUserLikes.ts";
 import { useLikes } from "./context/Likes.tsx";
 import SearchResult from "./components/search/searchResults.tsx";
+import AllVideos from "./pages/allVideos.tsx";
 
 function App() {
   const { setMyChannelLink, setUserDetails } = useUser();
@@ -81,6 +82,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route path="/:id" element={<VideoDetails />} />
         <Route path="channels" element={<ChannelList />} />
+        <Route path="videos" element={<AllVideos />} />
         <Route path="results" element={<SearchResult />} />
         <Route path="my-account" element={<UserProfile />} />
         <Route path="/create-channels/" element={<CreateChannel />} />

@@ -43,13 +43,19 @@ To do:
 - Views-------------------------
 - Dark Mode--------------
 - Mobile Responsive
-- all videos page!!!!!!!!!!!!!!!!!!
+- all videos page***********************
 - Deploy Application
 
 
 subscribed channels list
 liked vidoes list
 subscribers channel calculation total channels subscribed to calculation
+
+
+
+popup for logging in when clicking like, comment, subscribe
+static assets like offcanvas menu popup menu (both of header), footer
+
 
 
 on channel click visit users channel

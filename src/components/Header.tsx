@@ -39,6 +39,9 @@ function Header() {
             <Link to="/channels" className="my-auto">
               <p>Channels</p>
             </Link>
+            <Link to="/videos" className="my-auto">
+              <p>Videos</p>
+            </Link>
             <img
               className="header-icon my-auto"
               src="/src/assets/popupmenuHeader.svg"
