@@ -7,6 +7,7 @@ import { useVideoAndChannel } from "../context/VideoAndChannel";
 import LikeDislikeComponent from "../components/likeDislikeComponent";
 import { useLikes } from "../context/Likes";
 import { getCurrentUserLikes } from "../utils/getCurrentUserLikes";
+import Comments from "../components/Comments";
 
 function VideoDetails() {
   const { id } = useParams();
@@ -91,7 +92,7 @@ function VideoDetails() {
     console.log("myStatus", currentLikeStatus);
     return (
       <>
-        <div className="container w-5/6 flex flex-row mx-auto">
+        <div className="container w-5/6 flex flex-row mx-auto mb-10">
           <div className="w-3/4">
             <div style={{ maxWidth: "853px" }} className="mx-auto">
               <iframe
@@ -200,6 +201,9 @@ function VideoDetails() {
                   </span>
                 </p>
                 <p className="text-sm mt-2">{videoDetail.description}</p>
+              </div>
+              <div className="container mt-5">
+                <Comments id={id} />
               </div>
             </div>
           </div>

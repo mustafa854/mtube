@@ -44,7 +44,22 @@ To do:
 - Dark Mode--------------
 - Mobile Responsive
 - all videos page!!!!!!!!!!!!!!!!!!
+- Deploy Application
+
 
 subscribed channels list
 liked vidoes list
 subscribers channel calculation total channels subscribed to calculation
+
+
+on channel click visit users channel
+
+
+sort comments
+make comments editable
+like and unlike comments
+admin can heart the comment
+pin the comment
+reply the comment
+notify the user
+delete the comment
