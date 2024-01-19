@@ -14,20 +14,19 @@ import Home from "./pages/home";
 import VideoDetails from "./pages/videoDetail";
 import NotFound from "./pages/notFound";
 import ChannelList from "./pages/channelsList";
-import ChannelUserProfile from "./pages/channelUserProfile.tsx";
-import UploadVideoProfile from "./pages/uploadVideoProfile";
-import EditProfile from "./pages/editProfile";
 import UserProfile from "./pages/userProfile.tsx";
 import { auth } from "./config/firebase-config.ts";
 import { useUser } from "./context/User.tsx";
 import { useVideoAndChannel } from "./context/VideoAndChannel.tsx";
 import ChannelsDetail from "./pages/channelsDetail.tsx";
 import CreateChannel from "./pages/createChannel.tsx";
+import { getCurrentUserLikes } from "./utils/getCurrentUserLikes.ts";
+import { useLikes } from "./context/Likes.tsx";
 
 function App() {
-  const { myChannelLink, setMyChannelLink, userDetails, setUserDetails } =
-    useUser();
-  const { videos, setVideos, channels, setChannels } = useVideoAndChannel();
+  const { setMyChannelLink, setUserDetails } = useUser();
+  const { setVideos, setChannels } = useVideoAndChannel();
+  const { likes, setLikes } = useLikes();
 
   const fetchIsChannelCreated = async () => {
     const response = await getChannelLink();
@@ -37,33 +36,25 @@ function App() {
     const response = await userAccountDetails();
     setUserDetails(response);
   };
+  const fetchLikesofCurrentUser = async () => {
+    const response = await getCurrentUserLikes();
+    setLikes(response);
+    console.log("Likes Response", response);
+  };
+
   useEffect(() => {
     if (auth.currentUser) {
       fetchIsChannelCreated();
       fetchUserDetails();
+      fetchLikesofCurrentUser();
     }
   }, [auth.currentUser]);
-  // useEffect(() => {
-  //   console.log(
-  //     "isLoggedIn: ",
-  //     auth.currentUser,
-  //     " myChannelLink: ",
-  //     myChannelLink,
-  //     "user details",
-  //     userDetails
-  //   );
-  // }, [auth.currentUser, myChannelLink, userDetails]);
 
-  /**
-   *
-   *
-   */
   const fetchChannels = async () => {
     const response = await getChannels();
     response.forEach((element) => {
       setChannels((prevArray) => [...prevArray, element.data()]);
     });
-    // console.log(channels);
   };
   const fetchVideos = async () => {
     const response = await getVideos();
@@ -71,12 +62,11 @@ function App() {
       setVideos((prevArray) => [...prevArray, element.data()]);
     });
   };
-  // const [videos, setVideos] = useState([]);
-  // const [channels, setChannels] = useState([]);
 
   const shouldFetch = useRef(true);
 
   useEffect(() => {
+    fetchLikesofCurrentUser();
     if (shouldFetch.current) {
       shouldFetch.current = false;
 
@@ -84,10 +74,6 @@ function App() {
       fetchVideos();
     }
   }, []);
-  // useEffect(() => {
-  //   console.log(videos);
-  //   console.log(channels);
-  // }, [videos, channels]);
   return (
     <Router>
       <Header />

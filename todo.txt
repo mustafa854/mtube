@@ -1,3 +1,6 @@
+hide edit profile and upload video on others profile
+implementing dates
+
 edit uploaded videos
 Authentoication and permissions wherever requiredx
 
@@ -6,7 +9,7 @@ add tags to videos and filtering on homepage top below headers based on these ta
 
 make video play on hover card
 make video cards carousel on homepage
-implementing views, date, nav bar
+implementing views, nav bar
 verified channels
 accordion on channels details page for about info and on video description
 
@@ -18,7 +21,6 @@ Views like dislike share comment subscribe
 
 Protected Routes (also protect /my-account/)
 
-hide edit profile and upload video on others profile
 
 edit uploaded video form
 
@@ -34,13 +36,14 @@ In Progress:
 - edit video form (Editing Uploaded Videos)
 
 To do:
-- Likes and Dislike
-- Comment
-- searchBar
+- Likes and Dislike********************
+- Comment!!!!!!!!!!!!!!!!!!!!!!!!!!
+- searchBar!!!!!!!!!!!!!!!!!!!!!!!!
 - subscribe
-- Views
-- Dark Mode
+- Views-------------------------
+- Dark Mode--------------
 - Mobile Responsive
+- all videos page!!!!!!!!!!!!!!!!!!
 
 subscribed channels list
 liked vidoes list

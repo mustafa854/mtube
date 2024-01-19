@@ -4,6 +4,9 @@ import VideoCard2 from "../components/videoCard2";
 import { Link } from "react-router-dom";
 import { currentVideoDetail } from "../services/firebase";
 import { useVideoAndChannel } from "../context/VideoAndChannel";
+import LikeDislikeComponent from "../components/likeDislikeComponent";
+import { useLikes } from "../context/Likes";
+import { getCurrentUserLikes } from "../utils/getCurrentUserLikes";
 
 function VideoDetails() {
   const { id } = useParams();
@@ -12,31 +15,52 @@ function VideoDetails() {
   const { videos } = useVideoAndChannel();
   const [timePosted, setTimePost] = useState("");
   const [datePostedStrFormat, setDatePostedStrFormat] = useState("");
-  useEffect(() => {
-    setCurrentId(id);
-  }, [id]);
-
-  const getPublishedDate = () => {
-    const nowInSeconds = Math.floor(Date.now() / 1000);
-    let timeUsed = nowInSeconds - videoDetail.publishDate.seconds;
-    if (timeUsed < 60) {
-      setTimePost(String(Math.floor(timeUsed)) + " seconds");
-    } else if (timeUsed < 60 * 60) {
-      setTimePost(String(Math.floor(timeUsed / 60)) + " minutes");
-    } else if (timeUsed < 60 * 60 * 24) {
-      setTimePost(String(Math.floor(timeUsed / (60 * 60))) + " hours");
-    } else if (timeUsed < 60 * 60 * 24 * 30) {
-      setTimePost(String(Math.floor(timeUsed / (60 * 60 * 24))) + " days");
-    } else if (timeUsed < 60 * 60 * 24 * 30 * 12) {
-      setTimePost(
-        String(Math.floor(timeUsed / (60 * 60 * 24 * 30))) + " months"
-      );
-    } else {
-      setTimePost(
-        String(Math.floor(timeUsed / (60 * 60 * 24 * 30 * 12))) + " years"
-      );
+  const { likes, setLikes } = useLikes();
+  const [currentLikeStatus, setcurrentLikeStatus] = useState("");
+  const [message, setMessage] = useState("");
+  console.log("Likes to be chckes", likes);
+  const getCurrentLiked = async () => {
+    likes.filter((like) => {
+      if (like.VideoId === id) {
+        setcurrentLikeStatus(like.likeOrDislike);
+      }
+    });
+  };
+  const requestLogin = (key) => {
+    if (key === "r") {
+      setMessage("");
+    } else if (key === "a") {
+      setMessage("Please Login to Like or Dislike");
     }
   };
+  useEffect(() => {
+    setCurrentId(id);
+    setcurrentLikeStatus("");
+  }, [id]);
+  useEffect(() => {
+    getCurrentLiked();
+  }, [likes]);
+  // const getPublishedDate = () => {
+  //   const nowInSeconds = Math.floor(Date.now() / 1000);
+  //   let timeUsed = nowInSeconds - videoDetail.publishDate.seconds;
+  //   if (timeUsed < 60) {
+  //     setTimePost(String(Math.floor(timeUsed)) + " seconds");
+  //   } else if (timeUsed < 60 * 60) {
+  //     setTimePost(String(Math.floor(timeUsed / 60)) + " minutes");
+  //   } else if (timeUsed < 60 * 60 * 24) {
+  //     setTimePost(String(Math.floor(timeUsed / (60 * 60))) + " hours");
+  //   } else if (timeUsed < 60 * 60 * 24 * 30) {
+  //     setTimePost(String(Math.floor(timeUsed / (60 * 60 * 24))) + " days");
+  //   } else if (timeUsed < 60 * 60 * 24 * 30 * 12) {
+  //     setTimePost(
+  //       String(Math.floor(timeUsed / (60 * 60 * 24 * 30))) + " months"
+  //     );
+  //   } else {
+  //     setTimePost(
+  //       String(Math.floor(timeUsed / (60 * 60 * 24 * 30 * 12))) + " years"
+  //     );
+  //   }
+  // };
   const getDatePostedStrFormat = () => {
     const jsDate = videoDetail.publishDate.toDate();
     let day = jsDate.getDate();
@@ -50,8 +74,8 @@ function VideoDetails() {
     if (typeof id === "string") {
       const response = await currentVideoDetail(id);
       setVideoDetail(response);
-      getPublishedDate();
-      getDatePostedStrFormat();
+      // getPublishedDate();
+      // getDatePostedStrFormat();
     } else {
       setVideoDetail({ error: "Video Doesn't exists" });
     }
@@ -59,12 +83,12 @@ function VideoDetails() {
 
   useEffect(() => {
     fetchVideoDetail();
-
+    getCurrentLiked();
     // getPublishedDate();
   }, [currentId]);
 
   if (videoDetail.videosId) {
-    console.log(videoDetail);
+    console.log("myStatus", currentLikeStatus);
     return (
       <>
         <div className="container w-5/6 flex flex-row mx-auto">
@@ -84,6 +108,36 @@ function VideoDetails() {
               <h2 className="text-xl font-bold leading-7 mt-3">
                 {videoDetail.title}
               </h2>
+              {message !== "" ? (
+                <>
+                  <div className="flex flex-row">
+                    <p className="my-auto">{message}</p>
+                    <button
+                      className="my-auto"
+                      onClick={() => requestLogin("r")}
+                    >
+                      <svg
+                        className="my-auto"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.5"
+                          d="m11.25 4.75l-6.5 6.5m0-6.5l6.5 6.5"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <p>{message}</p>
+              )}
               <div className="flex flex-row mt-2">
                 <div>
                   <Link to={"/channels/" + videoDetail.channel_id}>
@@ -120,6 +174,16 @@ function VideoDetails() {
                 >
                   Subscribe
                 </button>
+                <div className="my-auto ms-auto">
+                  <LikeDislikeComponent
+                    currentLikeStatus={currentLikeStatus}
+                    videoId={id}
+                    setcurrentLikeStatus={setcurrentLikeStatus}
+                    message={message}
+                    setMessage={setMessage}
+                    requestLogin={requestLogin}
+                  />
+                </div>
               </div>
 
               <div
@@ -141,7 +205,11 @@ function VideoDetails() {
           </div>
           <div className="w-1/4">
             {videos.map((video) =>
-              video.videosId !== currentId ? <VideoCard2 video={video} /> : ""
+              video.videosId !== currentId ? (
+                <VideoCard2 video={video} key={video.videosId} />
+              ) : (
+                ""
+              )
             )}
           </div>
         </div>

@@ -8,14 +8,11 @@ export const getChannelLink = async () => {
       collection(db, "userMeta"),
       where("email", "==", user.email)
     );
-    console.log("SAHI CHAL RAHA");
     const querySnapshot = await getDocs(qChannel);
     if (querySnapshot.size > 0) {
       querySnapshot.forEach((doc) => {
         output = doc.data().channelLink;
-        console.log("inside", doc.data());
       });
-      console.log("o", output);
       return output;
     }
   }
