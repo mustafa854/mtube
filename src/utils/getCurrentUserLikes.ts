@@ -9,10 +9,8 @@ export const getCurrentUserLikes = async () => {
       where("likedBy", "==", user.uid)
     );
     const querySnapshot = await getDocs(likesOrDislike);
-    console.log("...........................", querySnapshot.size);
     if (querySnapshot.size > 0) {
       querySnapshot.forEach((doc) => {
-        console.log("............................", doc.data());
         output.push(doc.data());
       });
       return output;

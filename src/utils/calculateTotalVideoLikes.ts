@@ -7,13 +7,5 @@ export const calculateTotalVideoLikes = async (videoId) => {
     where("likeOrDislike", "==", "like")
   );
   const querySnapshot = await getDocs(qLikes);
-  console.log(
-    "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
-    querySnapshot
-  );
-  console.log(
-    "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
-    querySnapshot.size
-  );
   return querySnapshot.size;
 };

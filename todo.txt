@@ -37,8 +37,8 @@ In Progress:
 
 To do:
 - Likes and Dislike********************
-- Comment!!!!!!!!!!!!!!!!!!!!!!!!!!
-- searchBar!!!!!!!!!!!!!!!!!!!!!!!!
+- Comment Advanced*********************
+- searchBar Advanced*********************
 - subscribe
 - Views-------------------------
 - Dark Mode--------------

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { googleSignin, userSignOut } from "../services/firebase.ts";
 import { auth } from "../config/firebase-config.js";
 import { useUser } from "../context/User.tsx";
+import SearchForm from "./search/searchForm.tsx";
 
 function Header() {
   const { myChannelLink, userDetails } = useUser();
@@ -30,7 +31,9 @@ function Header() {
             </Link>
           </div>
         </div>
-        <div></div>
+        <div className="">
+          <SearchForm />
+        </div>
         <div className="flex flex-row gap-x-8 justify-center">
           <div className="flex flex-row gap-8 ">
             <Link to="/channels" className="my-auto">
