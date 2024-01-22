@@ -1,29 +1,29 @@
 import "./styles/videoCard.css";
 import "./App.css";
-import Header from "./components/Header.tsx";
+import Header from "./components/Header.jsx";
 import "/src/styles/header.css";
 import { useEffect, useRef, useState } from "react";
-import { getChannelLink } from "./utils/getChannelLink.ts";
+import { getChannelLink } from "./utils/getChannelLink.js";
 import {
   getVideos,
   getChannels,
   userAccountDetails,
-} from "./services/firebase.ts";
+} from "./services/firebase.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./pages/home";
-import VideoDetails from "./pages/videoDetail";
-import NotFound from "./pages/notFound";
-import ChannelList from "./pages/channelsList";
-import UserProfile from "./pages/userProfile.tsx";
-import { auth } from "./config/firebase-config.ts";
-import { useUser } from "./context/User.tsx";
-import { useVideoAndChannel } from "./context/VideoAndChannel.tsx";
-import ChannelsDetail from "./pages/channelsDetail.tsx";
-import CreateChannel from "./pages/createChannel.tsx";
-import { getCurrentUserLikes } from "./utils/getCurrentUserLikes.ts";
-import { useLikes } from "./context/Likes.tsx";
-import SearchResult from "./components/search/searchResults.tsx";
-import AllVideos from "./pages/allVideos.tsx";
+import Home from "./pages/home.jsx";
+import VideoDetails from "./pages/videoDetail.jsx";
+import NotFound from "./pages/notFound.jsx";
+import ChannelList from "./pages/channelsList.jsx";
+import UserProfile from "./pages/userProfile.jsx";
+import { auth } from "./config/firebase-config.js";
+import { useUser } from "./context/User.jsx";
+import { useVideoAndChannel } from "./context/VideoAndChannel.jsx";
+import ChannelsDetail from "./pages/channelsDetail.jsx";
+import CreateChannel from "./pages/createChannel.jsx";
+import { getCurrentUserLikes } from "./utils/getCurrentUserLikes.js";
+import { useLikes } from "./context/Likes.jsx";
+import SearchResult from "./components/search/searchResults.jsx";
+import AllVideos from "./pages/allVideos.jsx";
 
 function App() {
   const { setMyChannelLink, setUserDetails } = useUser();

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { googleSignin, userSignOut } from "../services/firebase.ts";
+import { googleSignin, userSignOut } from "../services/firebase.js";
 import { auth } from "../config/firebase-config.js";
-import { useUser } from "../context/User.tsx";
-import SearchForm from "./search/searchForm.tsx";
+import { useUser } from "../context/User.jsx";
+import SearchForm from "./search/searchForm.jsx";
 
 function Header() {
   const { myChannelLink, userDetails } = useUser();

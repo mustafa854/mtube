@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-import { useUser } from "../context/User.tsx";
-import { isAuthenticated, userAccountDetails } from "../services/firebase.ts";
-import { auth } from "../config/firebase-config.ts";
+import { useUser } from "../context/User.jsx";
+import { isAuthenticated, userAccountDetails } from "../services/firebase.js";
+import { auth } from "../config/firebase-config.js";
 
 function UserProfile() {
   const { myChannelLink, setMyChannelLink, userDetails, setUserDetails } =
     useUser();
-  console.log(auth.currentUser);
 
   if (auth.currentUser === null) {
     return (

@@ -25,7 +25,6 @@ function LikeDislikeComponent({
   const fetchLikesofCurrentUser = async () => {
     const response = await getCurrentUserLikes();
     setLikes(response);
-    console.log("Likes Response", response);
   };
   const clikedonLikeorDislike = async (clickId) => {
     if (currentLikeStatus === "like") {

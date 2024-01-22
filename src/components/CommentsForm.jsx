@@ -18,7 +18,6 @@ function CommentsForm({
     const response = await postComment(id, commentInput);
     setCommentsCount(commentsCount + 1);
     setCurrentComments((prevArray) => [...prevArray, response]);
-    console.log("comment");
     setCommentInput("");
   };
   if (auth.currentUser) {

@@ -17,7 +17,6 @@ function CommentsCard({
   setCommentsCount,
 }) {
   const deleteComment = async () => {
-    console.log("delete this", comment.commentId);
     await deleteComments(comment.commentId);
     setCommentsCount(commentsCount - 1);
     setCurrentComments(
@@ -33,6 +32,7 @@ function CommentsCard({
     likeOrDislike: "",
     uid: auth.currentUser?.uid,
     videoId: id,
+    commentLikesId: undefined,
   });
   const [message, setMessage] = useState("");
   const [currentCommentLikesCount, setCurrentCommentLikesCount] = useState(0);
@@ -56,10 +56,6 @@ function CommentsCard({
   };
 
   const buttonClicked = async (id) => {
-    console.log("yeh hai har5amzaada bc", currentUserLike);
-    console.log("yeh hai har5amzaada bc", currentUserLike.likeOrDislike);
-    console.log("yeh hai har5amzaada bc", currentUserLike.commentLikesId);
-
     if (id === "like") {
       if (
         currentUserLike.likeOrDislike === undefined ||
@@ -93,7 +89,6 @@ function CommentsCard({
         setCurrentCommentLikesCount(currentCommentLikesCount + 1);
       }
     } else if (id === "dislike") {
-      console.log("u r a whore!", currentUserLike.likeOrDislike);
       if (
         currentUserLike.likeOrDislike == undefined ||
         currentUserLike.likeOrDislike === ""
@@ -122,26 +117,18 @@ function CommentsCard({
           currentUserLike.videoId
         );
         await updateLikesAndComments();
-        console.log(
-          "bandh kar tu ai ki fuck",
-          comment.commentId,
-          currentUserLike.commentLikesId,
-          "",
-          currentUserLike.videoId
-        );
       }
     }
-    console.log(id);
   };
 
   const onUpdateComment = async () => {
-    const response = await updateComment(comment.commentId, commentInput);
+    await updateComment(comment.commentId, commentInput);
     setIsReadOnly(true);
     setCurrentComments((prevArray) =>
-      prevArray.map((comment) =>
-        comment.commentId === comment.uid
-          ? { ...comment, commentText: commentInput }
-          : comment
+      prevArray.map((prevComment) =>
+        prevComment.commentId === comment.uid
+          ? { ...prevComment, commentText: commentInput }
+          : prevComment
       )
     );
   };
@@ -168,16 +155,9 @@ function CommentsCard({
 
   useEffect(() => {
     fetchCurrentCommentLikes();
-    console.log(
-      "currentUserCommentLikes00000000000000000000000000000000000",
-      currentUserCommentLikes
-    );
     const answer = currentUserCommentLikes.find((element) => {
-      console.log(element.commentId);
-      console.log(comment.commentId);
-      return element.commentId === comment.commentId;
+      return comment.commentId === element.commentId;
     });
-    console.log("answer hai yeh", answer);
     if (answer) {
       setCurrentUserLike(answer);
     }
@@ -479,7 +459,9 @@ function CommentsCard({
                 )}
               </div>
               <div className="">Reply</div>
-              {auth.currentUser?.uid === comment.uid ? (
+              {auth.currentUser &&
+              "uid" in comment &&
+              auth.currentUser.uid === comment.uid ? (
                 <div className="">
                   {isReadOnly ? (
                     <button onClick={() => setIsReadOnly(false)}>

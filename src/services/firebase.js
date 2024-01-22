@@ -34,7 +34,6 @@ export const getCurrentChannel = async (id) => {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    // console.log("Document data:", docSnap.data());
     return docSnap.data();
   } else {
     // docSnap.data() will be undefined in this case
@@ -53,7 +52,6 @@ export const getChannelVideos = async (id) => {
   let channelVideos = [];
   querySnapshot.forEach((doc) => {
     channelVideos.push(doc.data());
-    console.log(doc.data());
   });
   return channelVideos;
 };
@@ -149,8 +147,6 @@ export const currentVideoDetail = async (id) => {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    // console.log(docSnap.data());
-
     return docSnap.data();
   } else {
     return { error: "Video Doesn't exists" };
@@ -169,7 +165,6 @@ export const currentChannelDetail = async (id) => {
       .split("T")[0];
     output.createdAt = String(jsDate);
 
-    // console.log(docSnap.data());
     return output;
   } else {
     return { error: "Channel Doesn't exists" };

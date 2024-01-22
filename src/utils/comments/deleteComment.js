@@ -1,4 +1,4 @@
-import { deleteDoc, doc, documentId } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../config/firebase-config";
 
 export const deleteComments = async (commentId) => {

@@ -19,7 +19,7 @@ export const updateLikeorDislike = async (videoId, status) => {
     where("VideoId", "==", videoId)
   );
   const querySnapshot = await getDocs(q);
-  console.log(querySnapshot);
+
   if (querySnapshot.size < 1) {
     // Assume we have a Firestore collection reference stored in the variable 'collectionRef'
     const addLikesRef = collection(db, "Likes");
@@ -31,8 +31,6 @@ export const updateLikeorDislike = async (videoId, status) => {
       likeOrDislike: status,
       // More fields...
     });
-
-    console.log("Document written with ID: ", docRef.id);
   } else {
     querySnapshot.forEach((doc) => {
       if (status === "like") {

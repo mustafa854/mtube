@@ -9,7 +9,6 @@ function SearchResult() {
   const [searchResults, setSearchResults] = useState(["undefined"]);
   useEffect(() => {
     const query = searchParams.get("search_query");
-    console.log("query", query);
     setSearchQuery(query);
     if (query !== "") {
       fetchSearchResults();
@@ -21,11 +20,6 @@ function SearchResult() {
     const response = await getSearchResults(searchParams.get("search_query"));
     setSearchResults(response);
   };
-
-  useEffect(() => {
-    console.log(searchResults);
-    console.log();
-  }, [searchResults]);
 
   if (searchResults.length === 0) {
     return <h1>No Results Found for: {searchQuery}</h1>;

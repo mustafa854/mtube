@@ -1,6 +1,6 @@
 import { auth } from "../config/firebase-config";
 import CommentsCard from "./CommentsCard";
-import { getCommentCounts } from "./../utils/comments/getCommentCount";
+import { getCommentCounts } from "../utils/comments/getCommentCount";
 import { useEffect, useState } from "react";
 import { getCurrentVideoComments } from "../utils/comments/getCurrentVideoComments";
 import CommentsForm from "./CommentsForm";

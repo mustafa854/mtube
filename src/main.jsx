@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import App from "./App.jsx";
 import "./index.css";
-import { UserProvider } from "./context/User.tsx";
-import { VideoAndChannelProvider } from "./context/VideoAndChannel.tsx";
-import { LikesProvider } from "./context/Likes.tsx";
+import { UserProvider } from "./context/User.jsx";
+import { VideoAndChannelProvider } from "./context/VideoAndChannel.jsx";
+import { LikesProvider } from "./context/Likes.jsx";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <UserProvider>
       <VideoAndChannelProvider>

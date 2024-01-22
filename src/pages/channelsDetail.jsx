@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
-import { getChannelVideos } from "../services/firebase.ts";
-import { currentChannelDetail } from "./../services/firebase";
+import { getChannelVideos } from "../services/firebase.js";
+import { currentChannelDetail } from "../services/firebase.js";
 import { Routes, Route } from "react-router-dom";
-import DashboardVideos from "./../components/channelDetail/dashboardVideos";
-import UploadVideos from "../components/channelDetail/uploadVideos.tsx";
-import EditProfile from "../components/channelDetail/editProfile.tsx";
-import Profile from "../components/channelDetail/profile.tsx";
-import { useUser } from "../context/User.tsx";
+import DashboardVideos from "../components/channelDetail/dashboardVideos.jsx";
+import UploadVideos from "../components/channelDetail/uploadVideos.jsx";
+import Profile from "../components/channelDetail/profile.jsx";
+import { useUser } from "../context/User.jsx";
+import EditProfile from "./../components/channelDetail/editProfile";
 
 function ChannelsDetail() {
   const { id } = useParams();
   const location = useLocation();
-  //   console.log("location: ", location, "path: ", "/channel/" + id);
   const [currentId, setCurrentId] = useState(id);
   const [channelDetail, setChannelDetail] = useState({});
   const [currentChannelVideos, setCurrentChannelVideos] = useState([]);
@@ -30,7 +29,6 @@ function ChannelsDetail() {
       setChannelDetail(channelResponse);
       const videoResponse = await getChannelVideos(id);
       setCurrentChannelVideos(videoResponse);
-      console.log(videoResponse);
     } else {
       setChannelDetail({ error: "Video Doesn't exists" });
     }

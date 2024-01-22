@@ -8,6 +8,4 @@ export const updateComment = async (commentId, commentText) => {
     commentText: commentText,
   });
   console.log("Comment updated successfully");
-
-  return {};
 };

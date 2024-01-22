@@ -11,7 +11,6 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../../config/firebase-config";
 export const postComment = async (videoId, commentText) => {
-  console.log(videoId, commentText);
   const user = auth.currentUser;
   if (user) {
     const commentsRef = doc(collection(db, "comments"));

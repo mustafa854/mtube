@@ -9,6 +9,5 @@ export const getLikesCount = async (commentId) => {
     where("likeOrDislike", "==", "like")
   );
   const querySnapshot = await getDocs(q);
-  console.log(commentId, querySnapshot.size);
   return querySnapshot.size;
 };

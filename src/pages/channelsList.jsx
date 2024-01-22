@@ -1,9 +1,8 @@
 import ChannelsCard from "../components/channelsCard";
-import { useVideoAndChannel } from "./../context/VideoAndChannel";
+import { useVideoAndChannel } from "../context/VideoAndChannel";
 
 function ChannelList() {
   const { channels } = useVideoAndChannel();
-  console.log(channels);
   if (channels) {
     return (
       <>

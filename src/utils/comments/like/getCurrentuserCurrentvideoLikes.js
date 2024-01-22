@@ -17,7 +17,6 @@ export const getCurrentuserCurrentvideoLikes = async (videoId) => {
         output.push(doc.data());
       });
     }
-    console.log("output", output);
     return output;
   } else {
     return output;

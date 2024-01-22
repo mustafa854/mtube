@@ -15,7 +15,6 @@ export const updateCommentLikeorDislike = async (
   videoId
 ) => {
   const user = auth.currentUser;
-  console.log("basjkdbnaskdjnaskdasdkjnasidn bhg bc", commentLikesId);
   if (user) {
     if (commentLikesId && commentLikesId !== "") {
       const likesRef = doc(db, "commentLikes", commentLikesId);
@@ -25,7 +24,6 @@ export const updateCommentLikeorDislike = async (
           likeOrDislike: likeOrDislike,
         });
 
-        console.log("Like updated successfully");
         return {
           commentId: commentId,
           commentLikesId: commentLikesId,
@@ -34,14 +32,10 @@ export const updateCommentLikeorDislike = async (
           videoId: videoId,
         };
       } else {
-        console.log("Deleting document:", likesRef);
         await deleteDoc(likesRef);
-        console.log("Document deleted successfully:", likesRef);
         return {};
       }
-      console.log("Like updated successfully");
     } else {
-      console.log("yaha kyu aa raha hai bhenchod");
       const likesRefCollection = collection(db, "commentLikes");
       const docRef = await addDoc(likesRefCollection, {
         commentId: commentId,

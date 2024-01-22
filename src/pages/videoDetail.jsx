@@ -6,7 +6,6 @@ import { currentVideoDetail } from "../services/firebase";
 import { useVideoAndChannel } from "../context/VideoAndChannel";
 import LikeDislikeComponent from "../components/likeDislikeComponent";
 import { useLikes } from "../context/Likes";
-import { getCurrentUserLikes } from "../utils/getCurrentUserLikes";
 import Comments from "../components/Comments";
 
 function VideoDetails() {

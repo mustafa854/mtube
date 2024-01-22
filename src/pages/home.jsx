@@ -1,6 +1,6 @@
-import Banner from "../components/Banner.tsx";
-import VideoCard from "../components/videocard.tsx";
-import { useVideoAndChannel } from "../context/VideoAndChannel.tsx";
+import Banner from "../components/Banner.jsx";
+import VideoCard from "../components/videocard.jsx";
+import { useVideoAndChannel } from "../context/VideoAndChannel.jsx";
 import "../index.css";
 import { useState } from "react";
 import { useEffect } from "react";
