@@ -18,3 +18,69 @@ post comment
 get current user comments
 
 
+currentComments, setCurrentComments
+
+
+commentId
+commentLikesId
+likeOrDislike
+uid
+videoId
+commentLikes
+
+
+commentId
+OjgKEcnQe8mQquVUH9Mr
+
+
+
+commentLikesId
+
+
+
+likeOrDislike
+dislike
+
+
+
+uid
+l9PKuJqBMuNYbAxXrevRl1Hub5p2
+
+
+
+videoId
+hmxlmQMQPwAudll7pATF
+
+
+
+videoId, uid, likeOrDislike
+
+
+
+
+getTotalLikesCount
+updateMyLike
+getCurrentUserLike
+
+
+
+{commentId:
+"1zb9NG5Pl1QtoAqtMb5s",
+commentLikesId:
+"RJUEXejdJwraZ1129B4B",
+likeOrDislike:
+"like",
+uid:
+"l9PKuJqBMuNYbAxXrevRl1Hub5p2",
+videoId:
+"hmxlmQMQPwAudll7pATF"}
+
+
+if commentsId===commentid
+update
+
+if{}
+delete
+
+if commentId not found:
+add

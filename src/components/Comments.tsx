@@ -4,16 +4,19 @@ import { getCommentCounts } from "./../utils/comments/getCommentCount";
 import { useEffect, useState } from "react";
 import { getCurrentVideoComments } from "../utils/comments/getCurrentVideoComments";
 import CommentsForm from "./CommentsForm";
+import { getCurrentuserCurrentvideoLikes } from "../utils/comments/like/getCurrentuserCurrentvideoLikes";
 
 function Comments({ id }) {
   const [commentsCount, setCommentsCount] = useState(0);
   const [currentComments, setCurrentComments] = useState([]);
+  const [currentUserCommentLikes, setCurrentUserCommentLikes] = useState([]);
   const [message, setMessage] = useState("");
   const fetchCommentsCount = async () => {
     const response = await getCommentCounts(id);
     setCommentsCount(response);
+    const commentLikes = await getCurrentuserCurrentvideoLikes(id);
+    setCurrentUserCommentLikes(commentLikes);
   };
-
   const requestLogin = (key) => {
     if (key === "r") {
       setMessage("");
@@ -97,9 +100,23 @@ function Comments({ id }) {
         </div>
       </div>
       <div className="container mt-8">
-        {currentComments.map((comment) => (
-          <CommentsCard comment={comment} key={comment.commentId} />
-        ))}
+        {currentComments.map((comment) => {
+          return (
+            <>
+              <CommentsCard
+                key={comment.commentId}
+                id={id}
+                comment={comment}
+                currentComments={currentComments}
+                setCurrentComments={setCurrentComments}
+                currentUserCommentLikes={currentUserCommentLikes}
+                setCurrentUserCommentLikes={setCurrentUserCommentLikes}
+                commentsCount={commentsCount}
+                setCommentsCount={setCommentsCount}
+              />
+            </>
+          );
+        })}
       </div>
     </>
   );

@@ -17,7 +17,6 @@ function LikeDislikeComponent({
   const [currentVideosLikesCount, setCurrentVideosLikesCount] = useState(0);
   const fetchCurrentVideosLikesCount = async () => {
     const response = await calculateTotalVideoLikes(videoId);
-    console.log("Total Likes!!!!!!!!!!!!!!!!!!!!!!!!", response);
     setCurrentVideosLikesCount(response);
   };
   useEffect(() => {

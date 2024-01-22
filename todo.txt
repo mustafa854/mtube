@@ -45,7 +45,7 @@ To do:
 - Mobile Responsive
 - all videos page***********************
 - Deploy Application
-
+- accordions
 
 subscribed channels list
 liked vidoes list
@@ -62,10 +62,11 @@ on channel click visit users channel
 
 
 sort comments
-make comments editable
+make comments editable-------------------
 like and unlike comments
 admin can heart the comment
 pin the comment
 reply the comment
 notify the user
 delete the comment
+delte reply

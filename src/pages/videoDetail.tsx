@@ -19,7 +19,6 @@ function VideoDetails() {
   const { likes, setLikes } = useLikes();
   const [currentLikeStatus, setcurrentLikeStatus] = useState("");
   const [message, setMessage] = useState("");
-  console.log("Likes to be chckes", likes);
   const getCurrentLiked = async () => {
     likes.filter((like) => {
       if (like.VideoId === id) {
@@ -89,7 +88,6 @@ function VideoDetails() {
   }, [currentId]);
 
   if (videoDetail.videosId) {
-    console.log("myStatus", currentLikeStatus);
     return (
       <>
         <div className="container w-5/6 flex flex-row mx-auto mb-10">
