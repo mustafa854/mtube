@@ -19,13 +19,13 @@ function Header() {
       <div className="container mx-auto p-4 flex flex-row justify-between	items-center">
         <div className="flex flex-row gap-x-4">
           <div>
-            <img className="header-icon" src="/src/assets/menu.svg" alt="" />
+            <img className="header-icon" src="/assets/menu.svg" alt="" />
           </div>
           <div>
             <Link to={"/"}>
               <img
                 className="header-icon--logo"
-                src="/src/assets/logo.svg"
+                src="/assets/logo.svg"
                 alt=""
               />
             </Link>
@@ -44,7 +44,7 @@ function Header() {
             </Link>
             <img
               className="header-icon my-auto"
-              src="/src/assets/popupmenuHeader.svg"
+              src="/assets/popupmenuHeader.svg"
               alt=""
             />
           </div>
@@ -93,7 +93,7 @@ function Header() {
                     onClick={signOut}
                   >
                     <img
-                      src="/src/assets/profile.svg"
+                      src="/assets/profile.svg"
                       className="header-icon pt-1 pr-2 fill-current text-sky-600"
                       alt=""
                     />
@@ -109,7 +109,7 @@ function Header() {
                   onClick={signIn}
                 >
                   <img
-                    src="/src/assets/profile.svg"
+                    src="/assets/profile.svg"
                     className="header-icon pt-1 pr-2 fill-current text-sky-600"
                     alt=""
                   />

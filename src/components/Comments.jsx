@@ -79,7 +79,7 @@ function Comments({ id }) {
           <img
             src={
               auth.currentUser?.photoURL === undefined
-                ? "/src/assets/profile.jpeg"
+                ? "/assets/profile.jpeg"
                 : auth.currentUser.photoURL
             }
             className="rounded-full"

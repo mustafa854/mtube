@@ -22,7 +22,7 @@ function Banner({ closeBanner }) {
         </svg>
       </div>
       <img
-        src="/src/assets/banner.jpg"
+        src="/assets/banner.jpg"
         alt=""
         className="w-full max-h-80 object-cover"
       />
