@@ -8,7 +8,7 @@ function Header() {
   const { myChannelLink, userDetails } = useUser();
 
   const signIn = async () => {
-    googleSignin();
+    await googleSignin();
   };
   const signOut = async () => {
     userSignOut();
@@ -42,11 +42,6 @@ function Header() {
             <Link to="/videos" className="my-auto">
               <p>Videos</p>
             </Link>
-            <img
-              className="header-icon my-auto"
-              src="/assets/popupmenuHeader.svg"
-              alt=""
-            />
           </div>
           <div className="">
             {auth.currentUser ? (
