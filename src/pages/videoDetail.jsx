@@ -8,17 +8,32 @@ import LikeDislikeComponent from "../components/likeDislikeComponent";
 import { useLikes } from "../context/Likes";
 import Comments from "../components/Comments";
 import { getCommentReply } from "../utils/comments/commentReply/getCommentReply";
+import { updateVideoView } from "../utils/views/updateVideoView";
 
 function VideoDetails() {
   const { id } = useParams();
   const [currentId, setCurrentId] = useState(id);
   const [videoDetail, setVideoDetail] = useState({});
-  const { videos } = useVideoAndChannel();
+  const { videos, setVideos } = useVideoAndChannel();
   const [timePosted, setTimePost] = useState("");
   const [datePostedStrFormat, setDatePostedStrFormat] = useState("");
   const { likes, setLikes } = useLikes();
   const [currentLikeStatus, setcurrentLikeStatus] = useState("");
   const [message, setMessage] = useState("");
+  const [newView, setNewView] = useState(undefined);
+  const updateViews = async () => {
+    const viewsResponse = await updateVideoView(id);
+    setVideos((prevArray) =>
+      prevArray.map((element) =>
+        element.videosId === id ? { ...element, views: viewsResponse } : element
+      )
+    );
+    setNewView(viewsResponse);
+  };
+  useEffect(() => {
+    updateViews();
+  }, []);
+
   const getCurrentLiked = async () => {
     likes.filter((like) => {
       if (like.VideoId === id) {
@@ -36,6 +51,7 @@ function VideoDetails() {
   useEffect(() => {
     setCurrentId(id);
     setcurrentLikeStatus("");
+    updateViews();
   }, [id]);
   useEffect(() => {
     getCurrentLiked();
@@ -190,7 +206,7 @@ function VideoDetails() {
                 style={{ backgroundColor: "hsla(0,0%,93.3%,0.8)" }}
               >
                 <p className="text-sm font-medium">
-                  {videoDetail.views} Views&nbsp;&nbsp;
+                  {videoDetail.views + 1} Views&nbsp;&nbsp;
                   {timePosted ? timePosted + " ago" : <></>}&nbsp;&nbsp;
                   {datePostedStrFormat}
                   &nbsp;&nbsp;&nbsp;

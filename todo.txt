@@ -108,10 +108,10 @@ empty comment can't pass
 - adding loading placeholder or loading when data is being loaded-------------------------------
 - increasing and descrising number of columes in home screen when zooming or zoming out the site----------------------
 - Now you can start creating a dashboard where people can upload the videos. you can allow anyone to upload video(not actual file but just the url) and they can put the title, description and tags and thumbnail links. and showing those videos in the home feed randomly
-- then adding view count
+- then adding view count**************************
 - like count*******************
 - comment like counts*********************
-- commenting under the other comment
+- commenting under the other comment*********************
 - When it's done you can move the backend. but before that we will review the code and disucss where you can improve your code quality and what are the anitpattern and what are the good pattern.
 [14:13]
 I think you have already added the video uploading stuff. that's great. but you can try to re-create youtube admin panel. which you can aceess from studio.youtube.com

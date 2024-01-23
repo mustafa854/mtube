@@ -4,6 +4,7 @@ import { useVideoAndChannel } from "../context/VideoAndChannel.jsx";
 import "../index.css";
 import { useState } from "react";
 import { useEffect } from "react";
+import { updateVideoView } from "../utils/views/updateVideoView.js";
 function Home() {
   const { videos, channels } = useVideoAndChannel();
   const [showBanner, setShowBanner] = useState(
