@@ -3,18 +3,178 @@ import { auth } from "../config/firebase-config";
 import { deleteCommentReply } from "../utils/comments/commentReply/deleteCommentReply";
 import { updateCommentReply } from "../utils/comments/commentReply/updateCommentReply";
 import CommentReplyForm from "./CommentReplyForm";
+import { updateCommentLikeorDislike } from "../utils/comments/like/updateCommentLikeorDislike";
+import {
+  getCurrentCommentReplyLikesandDislikes,
+  getCurrentCommentReplyLikesandDislikesCount,
+  getCurrentUserLikesandDislikes,
+  getCurrentVideoCommentReplyLikes,
+} from "../utils/comments/commentReply/like/getCurrentVideoCommentReplyLikes";
 
 function CommentReply({
+  id,
   comment,
   setCurrentCommentReply,
   setCommentReply,
   commentsCount,
   setCommentsCount,
+  currentCommentReplyLikes,
+  setCurrentCommentReplyLikes,
 }) {
   const [isReadOnly, setIsReadOnly] = useState(true);
   const [datePublished, setDatePublished] = useState("");
   const [commentInput, setCommentInput] = useState(comment.commentText);
   const [commentReplyFormVisible, setCommentReplyFormVisible] = useState(false);
+  const [currentUserLike, setCurrentUserLike] = useState({
+    commentId: comment.replyId,
+    likeOrDislike: "",
+    uid: auth.currentUser?.uid,
+    videoId: id,
+    commentLikesId: undefined,
+    objectType: "comment",
+  });
+  const [currentCommentLikesCount, setCurrentCommentLikesCount] = useState(0);
+  const fetchCurrentReplyLikeCount = async () => {
+    if (currentCommentReplyLikes) {
+      const response = getCurrentCommentReplyLikesandDislikesCount(
+        currentCommentReplyLikes,
+        comment.replyId
+      );
+      setCurrentCommentLikesCount(response);
+      const currentUserLikeResponse = await getCurrentUserLikesandDislikes(
+        currentCommentReplyLikes,
+        comment.replyId
+      );
+      if (currentUserLikeResponse) {
+        setCurrentUserLike(currentUserLikeResponse);
+      }
+    }
+  };
+  useEffect(() => {}, []);
+  getCurrentUserLikesandDislikes(id, comment.replyId);
+  const buttonClicked = async (id) => {
+    if (id === "like") {
+      if (
+        currentUserLike.likeOrDislike === undefined ||
+        currentUserLike.likeOrDislike === ""
+      ) {
+        const idResponse = await updateCommentLikeorDislike(
+          comment.replyId,
+          "",
+          "like",
+          currentUserLike.videoId,
+          "comment"
+        );
+        // await updateLikesAndComments();
+        setCurrentCommentLikesCount(currentCommentLikesCount + 1);
+        setCurrentUserLike({
+          commentId: comment.replyId,
+          likeOrDislike: "like",
+          uid: auth.currentUser?.uid,
+          videoId: id,
+          commentLikesId: idResponse,
+          objectType: "comment",
+        });
+      } else if (currentUserLike.likeOrDislike === "like") {
+        await updateCommentLikeorDislike(
+          comment.replyId,
+          currentUserLike.commentLikesId,
+          "",
+          currentUserLike.videoId,
+          "comment"
+        );
+        // await updateLikesAndComments();
+        // setCurrentCommentLikesCount(currentCommentLikesCount - 1);
+        setCurrentCommentLikesCount(currentCommentLikesCount - 1);
+        setCurrentUserLike({
+          commentId: comment.replyId,
+          likeOrDislike: "",
+          uid: auth.currentUser?.uid,
+          videoId: id,
+          commentLikesId: undefined,
+          objectType: "comment",
+        });
+      } else if (currentUserLike.likeOrDislike === "dislike") {
+        const idResponse = await updateCommentLikeorDislike(
+          comment.replyId,
+          currentUserLike.commentLikesId,
+          "like",
+          currentUserLike.videoId,
+          "comment"
+        );
+        // await updateLikesAndComments();
+        // setCurrentCommentLikesCount(currentCommentLikesCount + 1);
+        setCurrentCommentLikesCount(currentCommentLikesCount + 1);
+        setCurrentUserLike({
+          commentId: comment.replyId,
+          likeOrDislike: "like",
+          uid: auth.currentUser?.uid,
+          videoId: id,
+          commentLikesId: idResponse,
+          objectType: "comment",
+        });
+      }
+    } else if (id === "dislike") {
+      if (
+        currentUserLike.likeOrDislike == undefined ||
+        currentUserLike.likeOrDislike === ""
+      ) {
+        const idResponse = await updateCommentLikeorDislike(
+          comment.replyId,
+          "",
+          "dislike",
+          currentUserLike.videoId,
+          "comment"
+        );
+        // await updateLikesAndComments();
+        setCurrentUserLike({
+          commentId: comment.replyId,
+          likeOrDislike: "dislike",
+          uid: auth.currentUser?.uid,
+          videoId: id,
+          commentLikesId: idResponse,
+          objectType: "comment",
+        });
+      } else if (currentUserLike.likeOrDislike === "like") {
+        const idResponse = await updateCommentLikeorDislike(
+          comment.replyId,
+          currentUserLike.commentLikesId,
+          "dislike",
+          currentUserLike.videoId,
+          "comment"
+        );
+        // await updateLikesAndComments();
+        // setCurrentCommentLikesCount(currentCommentLikesCount - 1);
+        setCurrentCommentLikesCount(currentCommentLikesCount - 1);
+        setCurrentUserLike({
+          commentId: comment.replyId,
+          likeOrDislike: "dislike",
+          uid: auth.currentUser?.uid,
+          videoId: id,
+          commentLikesId: idResponse,
+          objectType: "comment",
+        });
+      } else if (currentUserLike.likeOrDislike === "dislike") {
+        await updateCommentLikeorDislike(
+          comment.replyId,
+          currentUserLike.commentLikesId,
+          "",
+          currentUserLike.videoId,
+          "comment"
+        );
+        // await updateLikesAndComments();
+        setCurrentUserLike({
+          commentId: comment.replyId,
+          likeOrDislike: "",
+          uid: auth.currentUser?.uid,
+          videoId: id,
+          commentLikesId: undefined,
+          objectType: "comment",
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     const date = new Date(comment.datePublished.seconds * 1000);
 
@@ -34,7 +194,9 @@ function CommentReply({
       );
     }
   }, []);
-
+  useEffect(() => {
+    fetchCurrentReplyLikeCount();
+  }, [currentCommentReplyLikes, comment]);
   const onUpdateComment = async () => {
     await updateCommentReply(comment.replyId, commentInput);
     setIsReadOnly(true);
@@ -122,7 +284,7 @@ function CommentReply({
                 className="my-auto cursor-pointer"
                 onClick={() => buttonClicked("like")}
               >
-                {/* {currentUserLike?.likeOrDislike !== "like" ? (
+                {currentUserLike?.likeOrDislike !== "like" ? (
                   <svg
                     width="20"
                     height="20"
@@ -147,15 +309,15 @@ function CommentReply({
                       d="M4 21h1V8H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2M20 8h-7l1.122-3.368A2 2 0 0 0 12.225 2H12L7 7.438V21h11l3.912-8.596L22 12v-2a2 2 0 0 0-2-2"
                     />
                   </svg>
-                )} */}
+                )}
               </div>
-              {/* <div>{currentCommentLikesCount}</div> */}
+              <div>{currentCommentLikesCount}</div>
             </div>
             <div
               className=" my-auto cursor-pointer"
-              //   onClick={() => buttonClicked("dislike")}
+              onClick={() => buttonClicked("dislike")}
             >
-              {/* {currentUserLike?.likeOrDislike !== "dislike" ? (
+              {currentUserLike?.likeOrDislike !== "dislike" ? (
                 <svg
                   className="rotate-180"
                   width="20"
@@ -181,7 +343,7 @@ function CommentReply({
                     d="M4 21h1V8H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2M20 8h-7l1.122-3.368A2 2 0 0 0 12.225 2H12L7 7.438V21h11l3.912-8.596L22 12v-2a2 2 0 0 0-2-2"
                   />
                 </svg>
-              )} */}
+              )}
             </div>
             <div
               className="cursor-pointer"

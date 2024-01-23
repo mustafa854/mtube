@@ -6,6 +6,7 @@ import { getCurrentVideoComments } from "../utils/comments/getCurrentVideoCommen
 import CommentsForm from "./CommentsForm";
 import { getCurrentuserCurrentvideoLikes } from "../utils/comments/like/getCurrentuserCurrentvideoLikes";
 import { getCommentReply } from "../utils/comments/commentReply/getCommentReply";
+import { getCurrentVideoCommentReplyLikes } from "../utils/comments/commentReply/like/getCurrentVideoCommentReplyLikes";
 
 function Comments({ id }) {
   const [commentsCount, setCommentsCount] = useState(0);
@@ -13,12 +14,8 @@ function Comments({ id }) {
   const [currentUserCommentLikes, setCurrentUserCommentLikes] = useState([]);
   const [message, setMessage] = useState("");
   const [commentReply, setCommentReply] = useState([]);
-  const fetchCommentsCountLikesReply = async () => {
-    const response = await getCommentCounts(id);
-    setCommentsCount(response);
-    const commentLikes = await getCurrentuserCurrentvideoLikes(id);
-    setCurrentUserCommentLikes(commentLikes);
-  };
+  const [currentCommentReplyLikes, setCurrentCommentReplyLikes] = useState([]);
+
   const requestLogin = (key) => {
     if (key === "r") {
       setMessage("");
@@ -27,11 +24,22 @@ function Comments({ id }) {
     }
   };
 
+  const fetchCommentsCountLikesReply = async () => {
+    const response = await getCommentCounts(id);
+    setCommentsCount(response);
+    const commentLikes = await getCurrentuserCurrentvideoLikes(id);
+    setCurrentUserCommentLikes(commentLikes);
+  };
+
   const fetchCurrentVideoCommentsAndReply = async () => {
     const commentsResponse = await getCurrentVideoComments(id);
     setCurrentComments(commentsResponse);
     const commentReplyResponse = await getCommentReply(id);
     setCommentReply(commentReplyResponse);
+    const commentReplyLikesResponse = await getCurrentVideoCommentReplyLikes(
+      id
+    );
+    setCurrentCommentReplyLikes(commentReplyLikesResponse);
   };
   useEffect(() => {
     fetchCommentsCountLikesReply();
@@ -108,6 +116,8 @@ function Comments({ id }) {
           return (
             <>
               <CommentsCard
+                currentCommentReplyLikes={currentCommentReplyLikes}
+                setCurrentCommentReplyLikes={setCurrentCommentReplyLikes}
                 key={comment.commentId}
                 id={id}
                 comment={comment}

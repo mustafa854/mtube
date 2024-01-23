@@ -19,6 +19,8 @@ function CommentsCard({
   setCommentsCount,
   commentReply,
   setCommentReply,
+  currentCommentReplyLikes,
+  setCurrentCommentReplyLikes,
 }) {
   const deleteComment = async () => {
     const deletedCommentReplies = await deleteComments(comment.commentId);
@@ -71,7 +73,8 @@ function CommentsCard({
           comment.commentId,
           "",
           "like",
-          currentUserLike.videoId
+          currentUserLike.videoId,
+          "video"
         );
         await updateLikesAndComments();
         setCurrentCommentLikesCount(currentCommentLikesCount + 1);
@@ -80,7 +83,8 @@ function CommentsCard({
           comment.commentId,
           currentUserLike.commentLikesId,
           "",
-          currentUserLike.videoId
+          currentUserLike.videoId,
+          "video"
         );
         await updateLikesAndComments();
         setCurrentCommentLikesCount(currentCommentLikesCount - 1);
@@ -89,7 +93,8 @@ function CommentsCard({
           comment.commentId,
           currentUserLike.commentLikesId,
           "like",
-          currentUserLike.videoId
+          currentUserLike.videoId,
+          "video"
         );
         await updateLikesAndComments();
         setCurrentCommentLikesCount(currentCommentLikesCount + 1);
@@ -103,7 +108,8 @@ function CommentsCard({
           comment.commentId,
           "",
           "dislike",
-          currentUserLike.videoId
+          currentUserLike.videoId,
+          "video"
         );
         await updateLikesAndComments();
       } else if (currentUserLike.likeOrDislike === "like") {
@@ -111,7 +117,8 @@ function CommentsCard({
           comment.commentId,
           currentUserLike.commentLikesId,
           "dislike",
-          currentUserLike.videoId
+          currentUserLike.videoId,
+          "video"
         );
         await updateLikesAndComments();
         setCurrentCommentLikesCount(currentCommentLikesCount - 1);
@@ -120,7 +127,8 @@ function CommentsCard({
           comment.commentId,
           currentUserLike.commentLikesId,
           "",
-          currentUserLike.videoId
+          currentUserLike.videoId,
+          "video"
         );
         await updateLikesAndComments();
       }
@@ -138,7 +146,9 @@ function CommentsCard({
       )
     );
   };
-
+  /**
+   * Date of Comment Posting
+   */
   useEffect(() => {
     const date = new Date(comment.datePublished.seconds * 1000);
 
@@ -174,17 +184,12 @@ function CommentsCard({
     let answer = commentReply.filter(
       (element) => element.commentId === comment.commentId
     );
-    console.log(answer);
+
     if (answer) {
-      console.log("sorted answer", answer);
       answer.sort((a, b) => a.datePublished - b.datePublished);
       setCurrentCommentReply(answer);
     }
   }, [comment, commentReply]);
-
-  useEffect(() => {
-    console.log(currentCommentReply);
-  }, [currentCommentReply]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -353,12 +358,15 @@ function CommentsCard({
                 {currentCommentReply ? (
                   currentCommentReply.map((element) => (
                     <CommentReply
+                      id={id}
                       comment={element}
                       key={element.replyId}
                       setCurrentCommentReply={setCurrentCommentReply}
                       setCommentReply={setCommentReply}
                       commentsCount={commentsCount}
                       setCommentsCount={setCommentsCount}
+                      currentCommentReplyLikes={currentCommentReplyLikes}
+                      setCurrentCommentReplyLikes={setCurrentCommentReplyLikes}
                     />
                   ))
                 ) : (
@@ -530,12 +538,15 @@ function CommentsCard({
               {currentCommentReply ? (
                 currentCommentReply.map((element) => (
                   <CommentReply
+                    id={id}
                     comment={element}
                     key={element.replyId}
                     setCurrentCommentReply={setCurrentCommentReply}
                     setCommentReply={setCommentReply}
                     commentsCount={commentsCount}
                     setCommentsCount={setCommentsCount}
+                    currentCommentReplyLikes={currentCommentReplyLikes}
+                    setCurrentCommentReplyLikes={setCurrentCommentReplyLikes}
                   />
                 ))
               ) : (
