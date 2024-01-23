@@ -5,13 +5,15 @@ import { useEffect, useState } from "react";
 import { getCurrentVideoComments } from "../utils/comments/getCurrentVideoComments";
 import CommentsForm from "./CommentsForm";
 import { getCurrentuserCurrentvideoLikes } from "../utils/comments/like/getCurrentuserCurrentvideoLikes";
+import { getCommentReply } from "../utils/comments/commentReply/getCommentReply";
 
 function Comments({ id }) {
   const [commentsCount, setCommentsCount] = useState(0);
   const [currentComments, setCurrentComments] = useState([]);
   const [currentUserCommentLikes, setCurrentUserCommentLikes] = useState([]);
   const [message, setMessage] = useState("");
-  const fetchCommentsCount = async () => {
+  const [commentReply, setCommentReply] = useState([]);
+  const fetchCommentsCountLikesReply = async () => {
     const response = await getCommentCounts(id);
     setCommentsCount(response);
     const commentLikes = await getCurrentuserCurrentvideoLikes(id);
@@ -25,19 +27,21 @@ function Comments({ id }) {
     }
   };
 
-  const fetchCurrentVideoComments = async () => {
+  const fetchCurrentVideoCommentsAndReply = async () => {
     const commentsResponse = await getCurrentVideoComments(id);
     setCurrentComments(commentsResponse);
+    const commentReplyResponse = await getCommentReply(id);
+    setCommentReply(commentReplyResponse);
   };
   useEffect(() => {
-    fetchCommentsCount();
-    fetchCurrentVideoComments();
+    fetchCommentsCountLikesReply();
+    fetchCurrentVideoCommentsAndReply();
   }, []);
   useEffect(() => {
     setCommentsCount(0);
     setCurrentComments([]);
-    fetchCommentsCount();
-    fetchCurrentVideoComments();
+    fetchCommentsCountLikesReply();
+    fetchCurrentVideoCommentsAndReply();
   }, [id]);
   return (
     <>
@@ -113,6 +117,8 @@ function Comments({ id }) {
                 setCurrentUserCommentLikes={setCurrentUserCommentLikes}
                 commentsCount={commentsCount}
                 setCommentsCount={setCommentsCount}
+                commentReply={commentReply}
+                setCommentReply={setCommentReply}
               />
             </>
           );
