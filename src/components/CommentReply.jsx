@@ -2,11 +2,19 @@ import { useEffect, useState } from "react";
 import { auth } from "../config/firebase-config";
 import { deleteCommentReply } from "../utils/comments/commentReply/deleteCommentReply";
 import { updateCommentReply } from "../utils/comments/commentReply/updateCommentReply";
+import CommentReplyForm from "./CommentReplyForm";
 
-function CommentReply({ comment, setCurrentCommentReply, setCommentReply }) {
+function CommentReply({
+  comment,
+  setCurrentCommentReply,
+  setCommentReply,
+  commentsCount,
+  setCommentsCount,
+}) {
   const [isReadOnly, setIsReadOnly] = useState(true);
   const [datePublished, setDatePublished] = useState("");
   const [commentInput, setCommentInput] = useState(comment.commentText);
+  const [commentReplyFormVisible, setCommentReplyFormVisible] = useState(false);
   useEffect(() => {
     const date = new Date(comment.datePublished.seconds * 1000);
 
@@ -55,6 +63,7 @@ function CommentReply({ comment, setCurrentCommentReply, setCommentReply }) {
     setCommentReply((prevArray) =>
       prevArray.filter((element) => element.replyId !== comment.replyId)
     );
+    setCommentsCount(commentsCount - 1);
   };
 
   return (
@@ -84,12 +93,13 @@ function CommentReply({ comment, setCurrentCommentReply, setCommentReply }) {
             </p>
           </div>
           <div className="container mt-1">
+            <span className="text-sky-600">@{comment.toReplyUserName}</span>
             <textarea
               readOnly={isReadOnly}
-              value={commentInput}
+              value={comment.commentText}
               onChange={(e) => setCommentInput(e.target.value)}
               className="focus:outline-none text-black w-full"
-              rows={4}
+              rows={1}
               style={{
                 fontSize: "14px",
                 marginTop: "2px",
@@ -97,7 +107,7 @@ function CommentReply({ comment, setCurrentCommentReply, setCommentReply }) {
                 // overflow: "hidden",
                 resize: "block",
               }}
-            />
+            ></textarea>
 
             {/* <p
               className="text-black"
@@ -173,7 +183,12 @@ function CommentReply({ comment, setCurrentCommentReply, setCommentReply }) {
                 </svg>
               )} */}
             </div>
-            <div className="">Reply</div>
+            <div
+              className="cursor-pointer"
+              onClick={() => setCommentReplyFormVisible(true)}
+            >
+              Reply
+            </div>
             {auth.currentUser?.uid === comment.uid ? (
               <div className="flex flex-row gap-4">
                 <div className="">
@@ -191,7 +206,26 @@ function CommentReply({ comment, setCurrentCommentReply, setCommentReply }) {
               <></>
             )}
           </div>
+          <div>
+            {commentReplyFormVisible ? (
+              <div className="ml-0 my-4">
+                <CommentReplyForm
+                  setCommentReplyFormVisible={setCommentReplyFormVisible}
+                  commentId={comment.commentId}
+                  toReplyUserName={comment.commentUserName}
+                  videoId={comment.videoId}
+                  commentsCount={commentsCount}
+                  setCommentsCount={setCommentsCount}
+                  setCurrentCommentReply={setCurrentCommentReply}
+                  setCommentReply={setCommentReply}
+                />
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
+        <div></div>
       </div>
     </>
   );

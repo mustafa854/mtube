@@ -6,6 +6,11 @@ export const getCommentCounts = async (videoId) => {
     where("videoId", "==", videoId)
   );
   const querySnapshot = await getDocs(qComments);
+  const qCommetsReply = query(
+    collection(db, "commentReply"),
+    where("videoId", "==", videoId)
+  );
+  const querySnapshot2 = await getDocs(qCommetsReply);
 
-  return querySnapshot.size;
+  return querySnapshot.size + querySnapshot2.size;
 };

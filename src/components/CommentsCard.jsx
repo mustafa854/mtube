@@ -6,6 +6,7 @@ import { getCurrentuserCurrentvideoLikes } from "../utils/comments/like/getCurre
 import { getLikesCount } from "../utils/comments/like/getLikesCount";
 import { deleteComments } from "../utils/comments/deleteComment";
 import CommentReply from "./CommentReply";
+import CommentReplyForm from "./CommentReplyForm";
 
 function CommentsCard({
   id,
@@ -20,8 +21,8 @@ function CommentsCard({
   setCommentReply,
 }) {
   const deleteComment = async () => {
-    await deleteComments(comment.commentId);
-    setCommentsCount(commentsCount - 1);
+    const deletedCommentReplies = await deleteComments(comment.commentId);
+    setCommentsCount(commentsCount - 1 - deletedCommentReplies);
     setCurrentComments(
       currentComments.filter(
         (element) => element.commentId !== comment.commentId
@@ -43,6 +44,7 @@ function CommentsCard({
   const [datePublished, setDatePublished] = useState("");
   const [commentInput, setCommentInput] = useState(comment.commentText);
   const [isReadOnly, setIsReadOnly] = useState(true);
+  const [commentReplyFormVisible, setCommentReplyFormVisible] = useState(false);
   const fetchCurrentCommentLikes = async () => {
     const response = await getLikesCount(comment.commentId);
     setCurrentCommentLikesCount(response);
@@ -55,7 +57,7 @@ function CommentsCard({
     if (key === "r") {
       setMessage("");
     } else if (key === "a") {
-      setMessage("Please Login to Like or Dislike a Comment on the video");
+      setMessage("Please Login to Engage with a Comment on the video");
     }
   };
 
@@ -222,7 +224,7 @@ function CommentsCard({
                   value={commentInput}
                   onChange={(e) => setCommentInput(e.target.value)}
                   className="focus:outline-none text-black w-full"
-                  rows={4}
+                  rows={2}
                   style={{
                     fontSize: "14px",
                     marginTop: "2px",
@@ -306,7 +308,12 @@ function CommentsCard({
                     </svg>
                   )}
                 </div>
-                <div className="cursor-pointer">Reply</div>
+                <div
+                  className="cursor-pointer"
+                  onClick={() => setCommentReplyFormVisible(true)}
+                >
+                  Reply
+                </div>
                 {auth.currentUser?.uid === comment.uid ? (
                   <div className="flex flex-row gap-4">
                     <div className="">
@@ -326,6 +333,22 @@ function CommentsCard({
                   <></>
                 )}
               </div>
+              {commentReplyFormVisible ? (
+                <div className="ml-0 my-4">
+                  <CommentReplyForm
+                    setCommentReplyFormVisible={setCommentReplyFormVisible}
+                    commentId={comment.commentId}
+                    toReplyUserName={comment.commentUserName}
+                    videoId={comment.videoId}
+                    commentsCount={commentsCount}
+                    setCommentsCount={setCommentsCount}
+                    setCurrentCommentReply={setCurrentCommentReply}
+                    setCommentReply={setCommentReply}
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
               <div className="commentReply container mt-3 mb-7">
                 {currentCommentReply ? (
                   currentCommentReply.map((element) => (
@@ -334,6 +357,8 @@ function CommentsCard({
                       key={element.replyId}
                       setCurrentCommentReply={setCurrentCommentReply}
                       setCommentReply={setCommentReply}
+                      commentsCount={commentsCount}
+                      setCommentsCount={setCommentsCount}
                     />
                   ))
                 ) : (
@@ -378,7 +403,7 @@ function CommentsCard({
                 value={commentInput}
                 onChange={(e) => setCommentInput(e.target.value)}
                 className="focus:outline-none text-black w-full"
-                rows={4}
+                rows={2}
                 style={{
                   fontSize: "14px",
                   marginTop: "2px",
@@ -494,19 +519,25 @@ function CommentsCard({
                   </svg>
                 )}
               </div>
-              <div className="">Reply</div>
-              {auth.currentUser &&
-              "uid" in comment &&
-              auth.currentUser.uid === comment.uid ? (
-                <div className="">
-                  {isReadOnly ? (
-                    <button onClick={() => setIsReadOnly(false)}>
-                      Edit Comment
-                    </button>
-                  ) : (
-                    <button onClick={onUpdateComment}>Save Comment</button>
-                  )}
-                </div>
+              <div className="cursor-pointer" onClick={() => requestLogin("a")}>
+                Reply
+              </div>
+            </div>
+            <div
+              className="commentReply container mt-3 mb-7"
+              onClick={() => requestLogin("a")}
+            >
+              {currentCommentReply ? (
+                currentCommentReply.map((element) => (
+                  <CommentReply
+                    comment={element}
+                    key={element.replyId}
+                    setCurrentCommentReply={setCurrentCommentReply}
+                    setCommentReply={setCommentReply}
+                    commentsCount={commentsCount}
+                    setCommentsCount={setCommentsCount}
+                  />
+                ))
               ) : (
                 <></>
               )}
