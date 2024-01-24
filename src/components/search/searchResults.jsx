@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getSearchResults } from "../../utils/search/getSearchResults";
 import VideoCard from "../videocard";
+import Loader from "../Loader";
 
 function SearchResult() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,7 +38,7 @@ function SearchResult() {
       </div>
     );
   } else {
-    return <h1>Loading</h1>;
+    return <Loader height={"70vh"} />;
   }
 }
 

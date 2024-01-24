@@ -8,6 +8,7 @@ import UploadVideos from "../components/channelDetail/uploadVideos.jsx";
 import Profile from "../components/channelDetail/profile.jsx";
 import { useUser } from "../context/User.jsx";
 import EditProfile from "./../components/channelDetail/editProfile";
+import Loader from "../components/Loader.jsx";
 
 function ChannelsDetail() {
   const { id } = useParams();
@@ -194,7 +195,7 @@ function ChannelsDetail() {
   } else if (id == undefined) {
     return <h1>404 Error</h1>;
   } else {
-    return <h1>Loading</h1>;
+    return <Loader height={"70vh"} />;
   }
 }
 

@@ -9,6 +9,7 @@ import { useLikes } from "../context/Likes";
 import Comments from "../components/Comments";
 import { getCommentReply } from "../utils/comments/commentReply/getCommentReply";
 import { updateVideoView } from "../utils/views/updateVideoView";
+import Loader from "../components/Loader";
 
 function VideoDetails() {
   const { id } = useParams();
@@ -238,7 +239,7 @@ function VideoDetails() {
   } else if (id == undefined) {
     return <h1>404 Error</h1>;
   } else {
-    return <h1>Loading</h1>;
+    return <Loader height={"70vh"} />;
   }
 }
 export default VideoDetails;

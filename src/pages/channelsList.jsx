@@ -1,3 +1,4 @@
+import Loader from "../components/Loader";
 import ChannelsCard from "../components/channelsCard";
 import { useVideoAndChannel } from "../context/VideoAndChannel";
 
@@ -14,7 +15,7 @@ function ChannelList() {
       </>
     );
   } else {
-    return <h1>Loading</h1>;
+    return <Loader height={"70vh"} />;
   }
 }
 

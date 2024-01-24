@@ -5,6 +5,7 @@ import "../index.css";
 import { useState } from "react";
 import { useEffect } from "react";
 import { updateVideoView } from "../utils/views/updateVideoView.js";
+import Loader from "../components/Loader.jsx";
 function Home() {
   const { videos, channels } = useVideoAndChannel();
   const [showBanner, setShowBanner] = useState(
@@ -18,41 +19,49 @@ function Home() {
     localStorage.setItem("showBanner", JSON.stringify(showBanner));
   }, [showBanner]);
 
-  if (videos && channels) {
-    return (
-      <>
-        {showBanner === true ? (
-          <Banner closeBanner={closeBanner} />
+  // if (videos.length > 0 && channels.length > 0) {
+  return (
+    <>
+      {showBanner === true ? (
+        <Banner closeBanner={closeBanner} />
+      ) : (
+        <>
+          <div
+            className="container flex flex-row justify-center content-center cursor-pointer"
+            onClick={closeBanner}
+          >
+            <h3 className="">Get Banner back</h3>
+          </div>
+        </>
+      )}
+      <div className="container mx-auto px-4 mt-5 mb-4 flex flex-row justify-between	items-center">
+        <h2 className="text-2xl	 font-bold	">Trending</h2>
+      </div>
+      <div className="video-wrapper grid grid-cols-4 gap-3 px-4">
+        {videos.length > 0 && channels.length > 0 ? (
+          videos
+            .slice(0, 8)
+            .map((video) => <VideoCard key={video.videosId} video={video} />)
         ) : (
-          <>
-            <div
-              className="container flex flex-row justify-center content-center cursor-pointer"
-              onClick={closeBanner}
-            >
-              <h3 className="">Get Banner back</h3>
-            </div>
-          </>
+          <Loader height={"400px"} />
         )}
-        <div className="container mx-auto px-4 mt-5 mb-4 flex flex-row justify-between	items-center">
-          <h2 className="text-2xl	 font-bold	">Trending</h2>
-        </div>
-        <div className="video-wrapper grid grid-cols-4 gap-3 px-4">
-          {videos.slice(0, 8).map((video) => (
-            <VideoCard key={video.videosId} video={video} />
-          ))}
-        </div>
-        <div className="container mx-auto px-4 mt-7 flex mb-4 flex-row justify-between	items-center">
-          <h2 className="text-2xl	 font-bold	">Trending</h2>
-        </div>
-        <div className="video-wrapper grid grid-cols-4 gap-3 px-4 mb-10">
-          {videos.slice(0, 8).map((video) => (
-            <VideoCard key={video.videosId} video={video} />
-          ))}
-        </div>
-      </>
-    );
-  } else {
-    return <h1>Loading</h1>;
-  }
+      </div>
+      <div className="container mx-auto px-4 mt-7 flex mb-4 flex-row justify-between	items-center">
+        <h2 className="text-2xl	 font-bold	">Trending</h2>
+      </div>
+      <div className="video-wrapper grid grid-cols-4 gap-3 px-4 mb-10">
+        {videos.length > 0 && channels.length > 0 ? (
+          videos
+            .slice(0, 8)
+            .map((video) => <VideoCard key={video.videosId} video={video} />)
+        ) : (
+          <Loader height={"400px"} />
+        )}
+      </div>
+    </>
+  );
+  // } else {
+  //   return;
+  // }
 }
 export default Home;
