@@ -70,8 +70,8 @@ function EditProfile({ id, channelDetail, setChannelDetail }) {
                 <div className="my-auto">
                   <div className="container">
                     <div
-                      className="w-full mx-auto mt-10"
-                      style={{ minWidth: "600px" }}
+                      className="w-full mx-auto mt-10 edit-profil-form"
+                      style={{}}
                     >
                       <form
                         className="bg-white border-2 rounded-xl px-8 py-6 pb-8 mb-4"

@@ -1,6 +1,6 @@
 function Banner({ closeBanner }) {
   return (
-    <div className="container mx-auto p-4 relative">
+    <div className="lg:container mx-auto p-4 relative">
       <div
         className="close-banner absolute top-9 right-9 cursor-pointer"
         onClick={closeBanner}

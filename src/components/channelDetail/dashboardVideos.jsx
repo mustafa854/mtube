@@ -7,7 +7,7 @@ function DashboardVideos({ id, currentChannelVideos }) {
     return (
       <>
         <div className="container">
-          <div className="video-wrapper grid grid-cols-3 gap-3 mt-6 mb-5">
+          <div className="video-wrapper grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-6 mb-5">
             {currentChannelVideos.map((video) => (
               <VideoCard key={video.videosId} video={video} />
             ))}

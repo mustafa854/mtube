@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 function SearchForm() {
   const [searchText, setSearchText] = useState("");
   return (
-    <form>
-      <div className="flex flex-row w-full">
+    <form className="mx-auto w-full">
+      <div className="flex flex-row w-full px-4">
         <input
           type="text"
           placeholder="Search"
-          className="flex-grow border w-96 ml-4 p-1 pl-4 rounded-l-full font-normal text-black focus:outline-none placeholder:font-normal placeholder:text-black"
+          className="flex-grow border w-96 p-1 pl-4 rounded-l-full font-normal text-black focus:outline-none placeholder:font-normal placeholder:text-black"
           onChange={(e) => setSearchText(e.target.value)}
           value={searchText}
         />

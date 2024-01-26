@@ -102,10 +102,10 @@ empty comment can't pass
 
 
 
-
+Single Sign On
 
 - making site responsive--------------------------------
-- adding loading placeholder or loading when data is being loaded-------------------------------
+- adding loading placeholder or loading when data is being loaded*******************
 - increasing and descrising number of columes in home screen when zooming or zoming out the site----------------------
 - Now you can start creating a dashboard where people can upload the videos. you can allow anyone to upload video(not actual file but just the url) and they can put the title, description and tags and thumbnail links. and showing those videos in the home feed randomly
 - then adding view count**************************

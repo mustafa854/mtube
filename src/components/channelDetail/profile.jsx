@@ -29,7 +29,7 @@ function Profile({ id, currentChannelVideos, channelDetail, setCurrentId }) {
       <p>{channelDetail.channelName}</p>
       <h3 className="text-black  font-semibold mt-3">About Channel</h3>
       <p>{channelDetail.channelAbout}</p>
-      <div className="flex flex-row">
+      <div className="sm:flex sm:flex-row">
         <div className="container">
           <h3 className="text-black  font-semibold mt-3">Total Subscribers</h3>
           <p>{channelDetail.Subscribers} Subscribers</p>

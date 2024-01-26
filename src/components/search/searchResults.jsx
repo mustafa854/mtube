@@ -26,11 +26,11 @@ function SearchResult() {
     return <h1>No Results Found for: {searchQuery}</h1>;
   } else if (searchResults[0] !== "undefined") {
     return (
-      <div className="container mt-2 w-5/6 flex flex-col mx-auto mb-10">
-        <h2 className="font-bold text-4xl">
+      <div className="lg:container md:mt-2 px-4 mt-6 flex flex-col mx-auto mb-10">
+        <h2 className="font-bold md:text-4xl text-3xl">
           Search Results for: {searchQuery}
         </h2>
-        <div className="mt-4 video-wrapper grid grid-cols-3 gap-3 ">
+        <div className="mt-4 video-wrapper grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-3 ">
           {searchResults.map((result) => (
             <VideoCard key={result.videosId} video={result} />
           ))}

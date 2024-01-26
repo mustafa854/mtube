@@ -7,7 +7,7 @@ function ChannelList() {
   if (channels) {
     return (
       <>
-        <div className="container grid grid-cols-2 p-4 ">
+        <div className="lg:container mx-auto grid grid-cols-1 md:grid-cols-2 py-4 ">
           {channels.map((channel) => (
             <ChannelsCard key={channel.channelsId} channel={channel} />
           ))}

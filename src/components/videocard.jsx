@@ -52,7 +52,7 @@ function VideoCard({ video }) {
   }, []);
 
   return (
-    <div className="video-card">
+    <div className="video-card mx-auto">
       <div className="video-card--img">
         <Link to={"/" + video.videosId}>
           <img

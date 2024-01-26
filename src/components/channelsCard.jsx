@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 function ChannelsCard({ channel }) {
   return (
     <>
-      <div className="container p-4 ">
+      <div className="container p-4 mx-auto ">
         <Link to={"/channels/" + channel.channelsId}>
           <div className="flex flex-row border-2 p-4 rounded-md">
             <div>

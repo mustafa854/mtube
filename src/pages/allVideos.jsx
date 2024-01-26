@@ -4,9 +4,9 @@ import VideoCard from "../components/videocard";
 function AllVideos() {
   const { videos } = useVideoAndChannel();
   return (
-    <div className="container mt-2 w-5/6 flex flex-col mx-auto mb-10">
+    <div className="lg:container mt-8 px-4 flex flex-col mx-auto mb-10">
       <h2 className="font-bold text-4xl">All Videos</h2>
-      <div className="mt-4 video-wrapper grid grid-cols-3 gap-3 ">
+      <div className="lg:container mx-auto video-wrapper grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-6 mb-10">
         {videos.map((video) => (
           <VideoCard key={video.videosId} video={video} />
         ))}

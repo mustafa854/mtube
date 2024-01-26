@@ -32,7 +32,7 @@ function VideoCard2({ video }) {
   return (
     <>
       <div className="video-card flex flex-row mb-2">
-        <div className="video-card--img width-9-20">
+        <div className="video-card--img width-9-20 my-auto">
           <Link to={"/" + video.videosId}>
             <img
               src={video.videoThumbnail}
@@ -44,9 +44,14 @@ function VideoCard2({ video }) {
         <div className="video-card--content flex flex-row width-11-20 pl-2">
           <div className="video-details">
             <Link to={"/" + video.videosId}>
-              <h4 className="video-title font-medium leading-5 text-sm pb-1">
+              <h4 className="video-title lg:max-xl:hidden  font-medium leading-5 text-sm pb-1">
                 {video.title.length > 40
                   ? video.title.slice(0, 40) + "..."
+                  : video.title}
+              </h4>
+              <h4 className="hidden lg:max-xl:block video-title font-medium leading-5 text-sm pb-1">
+                {video.title.length > 25
+                  ? video.title.slice(0, 25) + "..."
                   : video.title}
               </h4>
             </Link>
@@ -57,14 +62,14 @@ function VideoCard2({ video }) {
                 </p>
               </Link>
               <Link to={"/" + video.videosId}>
-                <div className="video-meta flex flex-row">
+                <div className="video-meta xl:flex xl:flex-row">
                   <p className="view-count text-xs font-normal text-gray-500">
                     {video.views} Views
                   </p>
-                  <p className="upload-date text-xs pl-2 font-normal text-gray-500">
+                  <p className="upload-date text-xs pl-2 font-normal text-gray-500 hidden xl:block">
                     •
                   </p>
-                  <p className="upload-date text-xs pl-2 font-normal text-gray-500">
+                  <p className="upload-date text-xs xl:pl-2 lg:max-xl:hidden font-normal text-gray-500">
                     {timePosted} ago
                   </p>
                 </div>

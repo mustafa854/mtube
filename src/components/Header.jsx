@@ -16,7 +16,7 @@ function Header() {
 
   return (
     <>
-      <div className="container mx-auto p-4 flex flex-row justify-between	items-center">
+      <div className="lg:container mx-auto p-4 flex flex-row justify-between	items-center">
         <div className="flex flex-row gap-x-4">
           <div>
             <img className="header-icon" src="/assets/menu.svg" alt="" />
@@ -31,11 +31,11 @@ function Header() {
             </Link>
           </div>
         </div>
-        <div className="">
+        <div className="hidden lg:block">
           <SearchForm />
         </div>
-        <div className="flex flex-row gap-x-8 justify-center">
-          <div className="flex flex-row gap-8 ">
+        <div className="flex flex-row sm:gap-8 gap-x-4 justify-center">
+          <div className="sm:flex sm:flex-row gap-4 lg:gap-8 hidden">
             <Link to="/channels" className="my-auto">
               <p>Channels</p>
             </Link>
@@ -46,30 +46,32 @@ function Header() {
           <div className="">
             {auth.currentUser ? (
               <>
-                <div className="container flex flex-row gap-8">
+                <div className="lg:container flex flex-row sm:gap-8 gap-4">
                   {myChannelLink !== "" && myChannelLink !== undefined ? (
                     <Link
                       to={"/channels/" + myChannelLink}
-                      className="flex flex-row justify-center content-center"
+                      className="sm:flex sm:flex-row sm:justify-center sm:content-center hidden"
                     >
                       <p className="my-auto mr-2">My Channel</p>
                     </Link>
                   ) : (
                     <Link
                       to="/my-account"
-                      className="flex flex-row justify-center content-center"
+                      className="sm:flex sm:flex-row sm:justify-center sm:content-center hidden"
                     >
-                      <p className="my-auto mr-2">Create Channel</p>
+                      <p className="my-auto sm:mr-2">Create Channel</p>
                     </Link>
                   )}
 
                   <div>
                     <Link
                       to="/my-account"
-                      className="flex flex-row justify-center content-center"
+                      className="flex flex-row justify-center content-center md:gap-8 gap-4"
                     >
                       {" "}
-                      <p className="my-auto mr-2">My Account</p>
+                      <p className="my-auto sm:mr-2 sm:block hidden">
+                        My Account
+                      </p>
                       <img
                         src={userDetails.photo}
                         alt=""
@@ -114,6 +116,69 @@ function Header() {
             )}
           </div>
         </div>
+      </div>
+
+      <div className="flex flex-row gap-8 gap-x-4 justify-center sm:hidden mx-auto mb-4">
+        <div className="flex flex-row gap-4 lg:gap-8">
+          <Link to="/channels" className="my-auto">
+            <p>Channels</p>
+          </Link>
+          <Link to="/videos" className="my-auto">
+            <p>Videos</p>
+          </Link>
+        </div>
+        <div className="">
+          {auth.currentUser ? (
+            <>
+              <div className="lg:container flex flex-row gap-4">
+                {myChannelLink !== "" && myChannelLink !== undefined ? (
+                  <Link
+                    to={"/channels/" + myChannelLink}
+                    className="flex flex-row justify-center content-center"
+                  >
+                    <p className="my-auto mr-2">Channel</p>
+                  </Link>
+                ) : (
+                  <Link
+                    to="/my-account"
+                    className="flex flex-row justify-center content-center"
+                  >
+                    <p className="my-auto mr-2">Create Channel</p>
+                  </Link>
+                )}
+
+                <div>
+                  <Link
+                    to="/my-account"
+                    className="flex flex-row justify-center content-center md:gap-8 gap-4"
+                  >
+                    {" "}
+                    <p className="my-auto mr-2 block">Account</p>
+                  </Link>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                className="flex flex-row hover:bg-sky-100 hover:border-sky-100 justify-center	items-center text-sky-600 p-2 border border-slate-200 rounded-full pt-0 pb-1"
+                onClick={signIn}
+              >
+                <img
+                  src="/assets/profile.svg"
+                  className="header-icon pt-1 pr-2 fill-current text-sky-600"
+                  alt=""
+                />
+                Signin
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+
+      <div className="lg:container mx-auto flex flex-row justify-between items-center lg:hidden">
+        <SearchForm />
       </div>
     </>
   );

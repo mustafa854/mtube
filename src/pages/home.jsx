@@ -27,17 +27,17 @@ function Home() {
       ) : (
         <>
           <div
-            className="container flex flex-row justify-center content-center cursor-pointer"
+            className="lg:container flex flex-row justify-center content-center cursor-pointer"
             onClick={closeBanner}
           >
             <h3 className="">Get Banner back</h3>
           </div>
         </>
       )}
-      <div className="container mx-auto px-4 mt-5 mb-4 flex flex-row justify-between	items-center">
+      <div className="lg:container mx-auto px-4 mt-5 mb-4 flex flex-row justify-between	items-center">
         <h2 className="text-2xl	 font-bold	">Trending</h2>
       </div>
-      <div className="video-wrapper grid grid-cols-4 gap-3 px-4">
+      <div className="lg:container mx-auto video-wrapper grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-4">
         {videos.length > 0 && channels.length > 0 ? (
           videos
             .slice(0, 8)
@@ -46,14 +46,16 @@ function Home() {
           <Loader height={"400px"} />
         )}
       </div>
-      <div className="container mx-auto px-4 mt-7 flex mb-4 flex-row justify-between	items-center">
+      <div className="lg:container mx-auto px-4 mt-7 flex mb-4 flex-row justify-between	items-center">
         <h2 className="text-2xl	 font-bold	">Trending</h2>
       </div>
-      <div className="video-wrapper grid grid-cols-4 gap-3 px-4 mb-10">
+      <div className="lg:container mx-auto video-wrapper grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-4 mb-10">
         {videos.length > 0 && channels.length > 0 ? (
-          videos
-            .slice(0, 8)
-            .map((video) => <VideoCard key={video.videosId} video={video} />)
+          videos.slice(0, 8).map((video) => (
+            <div className="container mx-auto">
+              <VideoCard key={video.videosId} video={video} />
+            </div>
+          ))
         ) : (
           <Loader height={"400px"} />
         )}

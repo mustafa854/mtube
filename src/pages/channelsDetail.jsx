@@ -42,7 +42,7 @@ function ChannelsDetail() {
   if (channelDetail.channelsId) {
     return (
       <>
-        <div className="container mt-2 w-5/6 flex flex-col mx-auto mb-10">
+        <div className="container mt-2 sm:w-5/6 flex flex-col mx-auto mb-10 px-4 sm:px-0">
           <div className="container h-64">
             <img
               src={channelDetail.channelCover}
@@ -50,15 +50,23 @@ function ChannelsDetail() {
               alt=""
             />
           </div>
-          <div className="container flex flex-row mt-8 ">
-            <div className="" style={{ height: "160px", width: "160px" }}>
+          <div className="container sm:flex sm:flex-row mt-8 ">
+            <div
+              className="my-auto"
+              style={{
+                minHeight: "160px",
+                minWidth: "160px",
+                height: "160px",
+                width: "160px",
+              }}
+            >
               <img
                 src={channelDetail.channelImage}
                 className=" rounded-full w-full h-full object-cover"
                 alt=""
               />
             </div>
-            <div className="flex flex-col gap-4 ml-6 ">
+            <div className="flex flex-col gap-4 sm:ml-6 ">
               <h2 className="font-bold text-4xl">
                 {channelDetail.channelName}
               </h2>

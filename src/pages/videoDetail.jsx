@@ -107,9 +107,9 @@ function VideoDetails() {
   if (videoDetail.videosId) {
     return (
       <>
-        <div className="container w-5/6 flex flex-row mx-auto mb-10">
-          <div className="w-3/4">
-            <div style={{ maxWidth: "853px" }} className="mx-auto">
+        <div className="xl:container px-4 mt-4 lg:mt-0 lg:px-0 lg:w-5/6 lg:flex lg:flex-row mx-auto lg:mb-10">
+          <div className="md:w-3/4 sm:mx-auto lg:mr-4">
+            <div className="mx-auto max-853">
               <iframe
                 width="100%"
                 height="480"
@@ -154,7 +154,7 @@ function VideoDetails() {
               ) : (
                 <p>{message}</p>
               )}
-              <div className="flex flex-row mt-2">
+              <div className="flex sm:flex-row mt-2 flex-col gap-4">
                 <div>
                   <Link to={"/channels/" + videoDetail.channel_id}>
                     <img
@@ -190,15 +190,18 @@ function VideoDetails() {
                 >
                   Subscribe
                 </button>
-                <div className="my-auto ms-auto">
-                  <LikeDislikeComponent
-                    currentLikeStatus={currentLikeStatus}
-                    videoId={id}
-                    setcurrentLikeStatus={setcurrentLikeStatus}
-                    message={message}
-                    setMessage={setMessage}
-                    requestLogin={requestLogin}
-                  />
+
+                <div className="sm:ms-auto w-1/3 sm:w-fit">
+                  <div className="my-auto ">
+                    <LikeDislikeComponent
+                      currentLikeStatus={currentLikeStatus}
+                      videoId={id}
+                      setcurrentLikeStatus={setcurrentLikeStatus}
+                      message={message}
+                      setMessage={setMessage}
+                      requestLogin={requestLogin}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -222,7 +225,7 @@ function VideoDetails() {
               </div>
             </div>
           </div>
-          <div className="w-1/4">
+          <div className="md:w-3/4 lg:w-1/4 sm:mx-auto sm:grid sm:grid-cols-2 lg:grid-cols-1">
             {videos.map((video) =>
               video.videosId !== currentId ? (
                 <VideoCard2 video={video} key={video.videosId} />
