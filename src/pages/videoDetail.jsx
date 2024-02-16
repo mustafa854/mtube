@@ -22,6 +22,7 @@ function VideoDetails() {
   const [currentLikeStatus, setcurrentLikeStatus] = useState("");
   const [message, setMessage] = useState("");
   const [newView, setNewView] = useState(undefined);
+
   const updateViews = async () => {
     const viewsResponse = await updateVideoView(id);
     setVideos((prevArray) =>
@@ -57,6 +58,7 @@ function VideoDetails() {
   useEffect(() => {
     getCurrentLiked();
   }, [likes]);
+
   // const getPublishedDate = () => {
   //   const nowInSeconds = Math.floor(Date.now() / 1000);
   //   let timeUsed = nowInSeconds - videoDetail.publishDate.seconds;
@@ -103,7 +105,29 @@ function VideoDetails() {
     getCurrentLiked();
     // getPublishedDate();
   }, [currentId]);
+  const [downloading, setDownloading] = useState(false);
 
+  const onDownload = async () => {
+    const videoIdRaw = videoDetail.videoLink;
+    const match = videoIdRaw.match(/embed\/(.*?)\?/);
+    const videoUrl = match[1];
+    try {
+      setDownloading(true);
+      const response = await fetch(
+        `http://localhost:3000/download?url=${videoUrl}`
+      );
+      if (response.ok) {
+        // If the download is successful, redirect the user back to the React app
+        window.location.href = "/"; // Redirect to the homepage or any other route
+      } else {
+        console.error("Error downloading video:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error downloading video:", error.message);
+    } finally {
+      setDownloading(false);
+    }
+  };
   if (videoDetail.videosId) {
     return (
       <>
@@ -193,6 +217,7 @@ function VideoDetails() {
 
                 <div className="sm:ms-auto w-1/3 sm:w-fit">
                   <div className="my-auto ">
+                    <button onClick={onDownload}>Download</button>
                     <LikeDislikeComponent
                       currentLikeStatus={currentLikeStatus}
                       videoId={id}
