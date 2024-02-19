@@ -394,3 +394,138 @@ function CommentReply({
 }
 
 export default CommentReply;
+
+// Consistent Naming: Ensure consistent naming conventions throughout your component. For example, some variables and functions use camelCase naming (commentReplyFormVisible), while others use snake_case (commentInput). Consistency makes your code easier to read and understand.
+
+// Conditional Rendering Logic: Review the logic for conditional rendering, especially in the onClickDeleteCommentReply and onUpdateComment functions. It's important to handle edge cases and error conditions appropriately.
+
+// Use of useEffect: The useEffect hook should be used to perform side effects in function components. Ensure that you're using it correctly and providing the correct dependencies to avoid unnecessary re-renders or potential bugs.
+
+// Component Composition: Consider breaking down the component into smaller, reusable components where appropriate. This can improve readability and maintainability, especially for complex components.
+
+// Error Handling: Make sure to implement error handling for asynchronous operations like fetching data or updating comments. This includes handling promises rejections and providing appropriate feedback to users.
+
+// CSS Classes: Instead of applying styles directly in the component, consider using CSS classes for better separation of concerns and easier maintenance.
+
+// Accessibility: Ensure that all interactive elements are accessible to users with disabilities. This includes providing appropriate labels, keyboard navigation, and focus management.
+
+// import { useEffect, useState } from "react";
+// import { auth } from "../config/firebase-config";
+// import { deleteCommentReply, updateCommentReply } from "../utils/comments";
+// import CommentReplyForm from "./CommentReplyForm";
+// import CommentInteraction from "./CommentInteraction";
+// import { formatDate } from "../utils/dateUtils";
+
+// function CommentReply({
+//   id,
+//   comment,
+//   setCurrentCommentReply,
+//   setCommentReply,
+//   commentsCount,
+//   setCommentsCount,
+//   currentCommentReplyLikes,
+//   setCurrentCommentReplyLikes,
+// }) {
+//   const [isReadOnly, setIsReadOnly] = useState(true);
+//   const [datePublished, setDatePublished] = useState("");
+//   const [commentInput, setCommentInput] = useState(comment.commentText);
+//   const [commentReplyFormVisible, setCommentReplyFormVisible] = useState(false);
+
+//   useEffect(() => {
+//     const date = formatDate(comment.datePublished);
+//     setDatePublished(date);
+//   }, [comment.datePublished]);
+
+//   const onUpdateComment = async () => {
+//     await updateCommentReply(comment.replyId, commentInput);
+//     setIsReadOnly(true);
+//     // Update the comment text in state
+//     setCurrentCommentReply((prevComments) =>
+//       prevComments.map((prevComment) =>
+//         prevComment.replyId === comment.replyId
+//           ? { ...prevComment, commentText: commentInput }
+//           : prevComment
+//       )
+//     );
+//     setCommentReply((prevComments) =>
+//       prevComments.map((prevComment) =>
+//         prevComment.replyId === comment.replyId
+//           ? { ...prevComment, commentText: commentInput }
+//           : prevComment
+//       )
+//     );
+//   };
+
+//   const onClickDeleteCommentReply = async () => {
+//     await deleteCommentReply(comment.replyId);
+//     // Remove the deleted comment from state
+//     setCurrentCommentReply((prevComments) =>
+//       prevComments.filter(
+//         (prevComment) => prevComment.replyId !== comment.replyId
+//       )
+//     );
+//     setCommentReply((prevComments) =>
+//       prevComments.filter(
+//         (prevComment) => prevComment.replyId !== comment.replyId
+//       )
+//     );
+//     setCommentsCount(commentsCount - 1);
+//   };
+
+//   return (
+//     <div className="container flex flex-row mt-5">
+//       <div className="flex-none">
+//         <img
+//           src={comment.userImage}
+//           className="rounded-full"
+//           alt=""
+//           style={{ width: "40px", height: "40px" }}
+//         />
+//       </div>
+//       <div className="pl-4 grow">
+//         <div className="container flex flex-row my-auto">
+//           <p className="text-sm text-black font-medium my-auto">
+//             {comment.commentUserName}
+//           </p>
+//           <p className="mt-auto text-xs ml-2" style={{ color: "#606060" }}>
+//             {datePublished}
+//           </p>
+//         </div>
+//         <div className="container mt-1">
+//           <textarea
+//             readOnly={isReadOnly}
+//             value={commentInput}
+//             onChange={(e) => setCommentInput(e.target.value)}
+//             className="focus:outline-none text-black w-full"
+//             rows={1}
+//             style={{ fontSize: "14px", marginTop: "2px", resize: "block" }}
+//           ></textarea>
+//         </div>
+//         <CommentInteraction
+//           currentUserLike={currentUserLike}
+//           buttonClicked={buttonClicked}
+//           currentCommentLikesCount={currentCommentLikesCount}
+//           setCommentReplyFormVisible={setCommentReplyFormVisible}
+//           onClickDeleteCommentReply={onClickDeleteCommentReply}
+//           onUpdateComment={onUpdateComment}
+//           isReadOnly={isReadOnly}
+//           setIsReadOnly={setIsReadOnly}
+//         />
+//         {commentReplyFormVisible && (
+//           <CommentReplyForm
+//             setCommentReplyFormVisible={setCommentReplyFormVisible}
+//             commentId={comment.commentId}
+//             toReplyUserName={comment.commentUserName}
+//             videoId={comment.videoId}
+//             commentsCount={commentsCount}
+//             setCommentsCount={setCommentsCount}
+//             setCurrentCommentReply={setCurrentCommentReply}
+//             setCommentReply={setCommentReply}
+//           />
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default CommentReply;
